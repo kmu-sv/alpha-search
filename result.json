@@ -1,0 +1,289 @@
+[
+    {
+        "id": "home-san-francisco-28",
+        "name": "Home",
+        "image_url": "https://s3-media3.fl.yelpcdn.com/bphoto/pafRdEJuUspYgKkB4_b8Ig/o.jpg",
+        "is_claimed": true,
+        "is_closed": false,
+        "url": "https://www.yelp.com/biz/home-san-francisco-28?adjust_creative=aQDbGvBEYGI-LUrWLU0hQA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_lookup&utm_source=aQDbGvBEYGI-LUrWLU0hQA",
+        "phone": "+14157029244",
+        "display_phone": "(415) 702-9244",
+        "review_count": 225,
+        "categories": [
+            {
+                "alias": "coffee",
+                "title": "Coffee & Tea"
+            }
+        ],
+        "rating": 4.5,
+        "location": {
+            "address1": "2018 Clement St",
+            "address2": null,
+            "address3": "",
+            "city": "San Francisco",
+            "zip_code": "94121",
+            "country": "US",
+            "state": "CA",
+            "display_address": [
+                "2018 Clement St",
+                "San Francisco, CA 94121"
+            ],
+            "cross_streets": "21st Ave & 22nd Ave"
+        },
+        "coordinates": {
+            "latitude": 37.7821014875834,
+            "longitude": -122.481005213735
+        },
+        "photos": [
+            "https://s3-media3.fl.yelpcdn.com/bphoto/pafRdEJuUspYgKkB4_b8Ig/o.jpg",
+            "https://s3-media4.fl.yelpcdn.com/bphoto/jyd7RTS_bW5NyPckNr2x7Q/o.jpg",
+            "https://s3-media2.fl.yelpcdn.com/bphoto/V5xzzGBG_g72WqrSCnoR5A/o.jpg"
+        ],
+        "price": "$$",
+        "hours": [
+            {
+                "open": [
+                    {
+                        "is_overnight": false,
+                        "start": "0700",
+                        "end": "1700",
+                        "day": 0
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0700",
+                        "end": "1700",
+                        "day": 1
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0700",
+                        "end": "1700",
+                        "day": 2
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0700",
+                        "end": "1700",
+                        "day": 3
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0700",
+                        "end": "1700",
+                        "day": 4
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0800",
+                        "end": "1700",
+                        "day": 5
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0800",
+                        "end": "1700",
+                        "day": 6
+                    }
+                ],
+                "hours_type": "REGULAR",
+                "is_open_now": false
+            }
+        ],
+        "transactions": []
+    },
+    {
+        "id": "vive-la-tarte-san-francisco",
+        "name": "Vive La Tarte",
+        "image_url": "https://s3-media4.fl.yelpcdn.com/bphoto/Bu8x19Lt6Cry7YdEVx9UGg/o.jpg",
+        "is_claimed": true,
+        "is_closed": false,
+        "url": "https://www.yelp.com/biz/vive-la-tarte-san-francisco?adjust_creative=aQDbGvBEYGI-LUrWLU0hQA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_lookup&utm_source=aQDbGvBEYGI-LUrWLU0hQA",
+        "phone": "+14156345444",
+        "display_phone": "(415) 634-5444",
+        "review_count": 265,
+        "categories": [
+            {
+                "alias": "bakeries",
+                "title": "Bakeries"
+            },
+            {
+                "alias": "breakfast_brunch",
+                "title": "Breakfast & Brunch"
+            },
+            {
+                "alias": "coffee",
+                "title": "Coffee & Tea"
+            }
+        ],
+        "rating": 4.5,
+        "location": {
+            "address1": "1160 Howard St",
+            "address2": null,
+            "address3": "",
+            "city": "San Francisco",
+            "zip_code": "94103",
+            "country": "US",
+            "state": "CA",
+            "display_address": [
+                "1160 Howard St",
+                "San Francisco, CA 94103"
+            ],
+            "cross_streets": "Rausch St & Sumner St"
+        },
+        "coordinates": {
+            "latitude": 37.7769811042271,
+            "longitude": -122.410907296645
+        },
+        "photos": [
+            "https://s3-media4.fl.yelpcdn.com/bphoto/Bu8x19Lt6Cry7YdEVx9UGg/o.jpg",
+            "https://s3-media4.fl.yelpcdn.com/bphoto/LJnvP6bZTNyO-PJvOIy4Tw/o.jpg",
+            "https://s3-media1.fl.yelpcdn.com/bphoto/_68mu0dbZhUKxk2svw-rFQ/o.jpg"
+        ],
+        "price": "$$",
+        "hours": [
+            {
+                "open": [
+                    {
+                        "is_overnight": false,
+                        "start": "0800",
+                        "end": "1700",
+                        "day": 0
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0800",
+                        "end": "1700",
+                        "day": 1
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0800",
+                        "end": "1700",
+                        "day": 2
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0800",
+                        "end": "1700",
+                        "day": 3
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0800",
+                        "end": "1700",
+                        "day": 4
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0800",
+                        "end": "1700",
+                        "day": 5
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0800",
+                        "end": "1700",
+                        "day": 6
+                    }
+                ],
+                "hours_type": "REGULAR",
+                "is_open_now": false
+            }
+        ],
+        "transactions": []
+    },
+    {
+        "id": "ballast-coffee-san-francisco",
+        "name": "Ballast Coffee",
+        "image_url": "https://s3-media2.fl.yelpcdn.com/bphoto/goJ2i7rhW15knilgsEP6Iw/o.jpg",
+        "is_claimed": true,
+        "is_closed": false,
+        "url": "https://www.yelp.com/biz/ballast-coffee-san-francisco?adjust_creative=aQDbGvBEYGI-LUrWLU0hQA&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_lookup&utm_source=aQDbGvBEYGI-LUrWLU0hQA",
+        "phone": "",
+        "display_phone": "",
+        "review_count": 15,
+        "categories": [
+            {
+                "alias": "coffee",
+                "title": "Coffee & Tea"
+            }
+        ],
+        "rating": 4.5,
+        "location": {
+            "address1": "329 W Portal Ave",
+            "address2": "",
+            "address3": "",
+            "city": "San Francisco",
+            "zip_code": "94127",
+            "country": "US",
+            "state": "CA",
+            "display_address": [
+                "329 W Portal Ave",
+                "San Francisco, CA 94127"
+            ],
+            "cross_streets": ""
+        },
+        "coordinates": {
+            "latitude": 37.73741,
+            "longitude": -122.46925
+        },
+        "photos": [
+            "https://s3-media2.fl.yelpcdn.com/bphoto/goJ2i7rhW15knilgsEP6Iw/o.jpg",
+            "https://s3-media2.fl.yelpcdn.com/bphoto/-5zh9VUUDv1Hs8TIZX-EUQ/o.jpg",
+            "https://s3-media3.fl.yelpcdn.com/bphoto/85FXxhHrb-Q2Lh3ezybJXw/o.jpg"
+        ],
+        "price": "$",
+        "hours": [
+            {
+                "open": [
+                    {
+                        "is_overnight": false,
+                        "start": "0800",
+                        "end": "1700",
+                        "day": 0
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0800",
+                        "end": "1700",
+                        "day": 1
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0800",
+                        "end": "1700",
+                        "day": 2
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0800",
+                        "end": "1700",
+                        "day": 3
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0800",
+                        "end": "1700",
+                        "day": 4
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0900",
+                        "end": "1500",
+                        "day": 5
+                    },
+                    {
+                        "is_overnight": false,
+                        "start": "0900",
+                        "end": "1500",
+                        "day": 6
+                    }
+                ],
+                "hours_type": "REGULAR",
+                "is_open_now": false
+            }
+        ],
+        "transactions": []
+    }
+]
