@@ -23,14 +23,11 @@ function initMap() {
         console.log(markers[i]);
 
     }
-
-
 }
 
+// mark random
 var locations = []
 
-
-// mark random
 for (var i = 0; i < 5; i++) {
     locations.push(
         {
@@ -47,6 +44,7 @@ $(document).ready(function () {
             padding: 10,
             fullwidth: true,
             shift: 10
+
         }
     );
 

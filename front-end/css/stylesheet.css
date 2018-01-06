@@ -14,7 +14,10 @@ html, body {
     display: block;
     width: 100%;
     bottom: 0;
+
+    height: 40vh;
     cursor: pointer;
+
 }
 
 .carousel .carousel-item {
