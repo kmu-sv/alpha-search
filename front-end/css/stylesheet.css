@@ -14,10 +14,14 @@ html, body {
     display: block;
     width: 100%;
     bottom: 0;
-
     height: 40vh;
     cursor: pointer;
+}
 
+@media (min-width: 600px) {
+    .carousel {
+        height: 25vh;
+    }
 }
 
 .carousel .carousel-item {
