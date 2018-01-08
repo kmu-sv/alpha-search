@@ -11,8 +11,11 @@ soup = BeautifulSoup(raw_code, "lxml")
 
 data_dictionary = dict()
 
-website = soup.select(".biz-website > a")[0].string
-data_dictionary["website"] = website
+try:
+    website = soup.select(".biz-website > a")[0].string
+    data_dictionary["website"] = website
+except Exception as ex: 
+    data_dictionary["website"] = 'unknown'
 
 moreinfo_dictionary = dict()
 
