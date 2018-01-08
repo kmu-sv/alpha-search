@@ -22,7 +22,7 @@ moreinfo_dictionary = dict()
 moreinfo = soup.select(".short-def-list > dl")
 for info in moreinfo:
     attr_name, attr_content = "", ""
-    for  data in info.children:
+    for data in info.children:
         if data.name == "dt": #tag_name == dt
             attr_name = data.string.strip() # strip function removes contents in bracket.
         if data.name == "dd":

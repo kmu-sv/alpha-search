@@ -1,12 +1,11 @@
 import json
 import requests
 
-with open('result.json') as f:
-    read_data = f.read()
+with open('result.json') as openfile:
+    read_data = openfile.read()
 
 datainfo = json.loads(read_data)
 
-#data_dictionary = dict()
 data = dict()
 
 

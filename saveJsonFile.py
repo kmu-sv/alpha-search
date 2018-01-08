@@ -8,7 +8,6 @@ import requests
 import sys
 import urllib
 
-
 try:
     # For Python 3.0 and later
     from urllib.error import HTTPError
@@ -20,21 +19,17 @@ except ImportError:
     from urllib import quote
     from urllib import urlencode
 
-
 API_KEY= 'V4mhEirjIuAFM2xPFw9Zx3h-OccaRn079SLXXLPAtjk4yLLUB1v-hKRXLmqfPClCY0uQhIJSl6qhCKpAE7j9LVc14F15ufG4KmMMq-Xo0YidXVQqqiSHmXmSgwhQWnYx'
-
 
 # API constants, you shouldn't have to change these.
 API_HOST = 'https://api.yelp.com'
 SEARCH_PATH = '/v3/businesses/search'
 BUSINESS_PATH = '/v3/businesses/'  # Business ID will come after slash.
 
-
 # Defaults for our simple example.
 DEFAULT_TERM = 'cafe'
 DEFAULT_LOCATION = 'San Francisco, CA'
 SEARCH_LIMIT = 3
-
 
 def request(host, path, api_key, url_params=None):
     """Given your API_KEY, send a GET request to the API.
@@ -53,8 +48,6 @@ def request(host, path, api_key, url_params=None):
     headers = {
         'Authorization': 'Bearer %s' % api_key,
     }
-
-    #print(u'Querying {0} ...'.format(url))
 
     response = requests.request('GET', url, headers=headers, params=url_params)
 
@@ -103,13 +96,13 @@ def query_api(term, location):
     if not businesses:
         return
 
-    datalist = []
+    businessList = []
     for idx in businesses:
         response = get_business(API_KEY, idx['id'])
-        datalist.append(response)
+        businessList.append(response)
 
     with open("result.json", "w") as f:
-        f.write(json.dumps(datalist, indent=4))
+        f.write(json.dumps(businessList, indent=4))
 
 def main():
     parser = argparse.ArgumentParser()
