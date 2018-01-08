@@ -17,7 +17,6 @@ datalist = []
 
 # Gmaps_result has 'results' tag
 for place in gmaps_result['results'][0:20]:
-
     # Find place_id
     place_id = place['place_id']
 
@@ -26,10 +25,7 @@ for place in gmaps_result['results'][0:20]:
 
     # Request result recieve and change json
     req = requests.get(req_query).json()
-
-
     datalist.append(req["result"])
-
 
 with open("result.json", "w") as f:
     f.write(json.dumps(datalist, indent=4))
