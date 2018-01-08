@@ -26,8 +26,6 @@ for item in datainfo:
     except KeyError: data['longitude'] = 'unknown'  
     try: data['phone'] = item['formatted_phone_number'] 
     except KeyError: data['phone'] = 'unknown' 
-    #try: data[] print(item['opening_hours']['periods'])
-    #except KeyError: print('unknown') 
     try: data['rating'] = item['rating'] 
     except KeyError: data['rating'] = 'unknown' 
     try: data['website'] = item['website']
@@ -45,8 +43,6 @@ for item in datainfo:
         opendatalist.append(opendata)
     data['openinfo'] = opendatalist
 
-
-
     photourl = []
     try: 
         for photoitem in item['photos']:
@@ -54,5 +50,6 @@ for item in datainfo:
             photourl.append(photo_query)
     except KeyError: data['photourl'] = 'unknown'
     data['photourl'] = photourl
+    
     print(json.dumps(data, indent=4))
 
