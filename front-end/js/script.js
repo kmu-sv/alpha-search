@@ -1,27 +1,35 @@
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 7,
-        center: locations[0]
+        zoom: 7
     });
-    // Create an array of alphabetical characters used to label the markers.
+
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    // Add some markers to the map.
-    // Note: The code uses the JavaScript Array.prototype.map() method to
-    // create an array of markers based on a given "locations" array.
-    // The map() method here has nothing to do with the Google Maps API.
-    var markers = locations.map(function (location, i) {
-        return new google.maps.Marker({
-            position: location,
+
+    var latlngbounds = new google.maps.LatLngBounds();
+
+    for (i = 0; i < locations.length; i++) {
+        var data = locations[i];
+        var myLatlng = new google.maps.LatLng(data['lat'], data['lng']);
+        var marker = new google.maps.Marker({
+            position : myLatlng,
+            map: map,
             label: labels[i % labels.length]
         });
-    });
-    // Add a marker clusterer to manage the markers.
-    var markerCluster = new MarkerClusterer(map, markers,
-        {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+        (function (marker, myLatlng) {
+            google.maps.event.addListener(marker, "click", function (e) {
+                console.log(this);
+                map.panTo(myLatlng);
+            });
+        })(marker, data);
 
-    for (i = 0; i < markers.length; i++) {
-        console.log(markers[i]);
+        latlngbounds.extend(marker.position);
     }
+
+    var bounds = new google.maps.LatLngBounds();
+
+    map.setCenter(latlngbounds.getCenter());
+    map.fitBounds(latlngbounds);
+
 }
 
 // mark random
@@ -47,4 +55,10 @@ $(document).ready(function () {
         }
     );
 
+    $('.carousel-item').on('click', function () {
+        var cardidx = parseInt(
+            $(this).attr('id').toString()
+        );
+        console.log(locations[cardidx]);
+    });
 });
