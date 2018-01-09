@@ -19,15 +19,17 @@ function initMap() {
         var idx = i;
         (function (marker, myLatlng, idx) {
             google.maps.event.addListener(marker, "click", function (e) {
-                console.log(idx);
                 map.panTo(myLatlng);
                 $('.carousel').carousel('set', idx);
             });
 
+            $('#' + idx.toString() + "").on('click', function (e) {
+                map.panTo(myLatlng);
+            })
+
         })(marker, data, idx);
 
         latlngbounds.extend(marker.position);
-
 
     }
 
