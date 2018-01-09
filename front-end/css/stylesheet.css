@@ -1,0 +1,29 @@
+#map {
+    height: 100%;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.carousel {
+    bottom: 0;
+    cursor: pointer;
+    display: block;
+    height: 40vh;
+    position: absolute;
+    width: 100%;
+}
+
+@media (min-width: 600px) {
+    .carousel {
+        height: 25vh;
+    }
+}
+
+.carousel .carousel-item {
+    opacity: 1 !important;
+}
