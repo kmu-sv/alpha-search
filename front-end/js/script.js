@@ -15,14 +15,20 @@ function initMap() {
             map: map,
             label: labels[i % labels.length]
         });
-        (function (marker, myLatlng) {
+
+        var idx = i;
+        (function (marker, myLatlng, idx) {
             google.maps.event.addListener(marker, "click", function (e) {
-                console.log(this);
+                console.log(idx);
                 map.panTo(myLatlng);
+                $('.carousel').carousel('set', idx);
             });
-        })(marker, data);
+
+        })(marker, data, idx);
 
         latlngbounds.extend(marker.position);
+
+
     }
 
     var bounds = new google.maps.LatLngBounds();
@@ -55,10 +61,4 @@ $(document).ready(function () {
         }
     );
 
-    $('.carousel-item').on('click', function () {
-        var cardidx = parseInt(
-            $(this).attr('id').toString()
-        );
-        console.log(locations[cardidx]);
-    });
 });
