@@ -6,10 +6,10 @@ with open('result.json') as openfile:
 
 datainfo = json.loads(read_data)
 
-data = dict()
-
+datalist = []
 
 for item in datainfo:
+    data = dict()
     try: data['name'] = item['name']
     except KeyError: data['name'] = 'unknown'
     try: 
@@ -27,16 +27,20 @@ for item in datainfo:
     try: data['infourl'] = item['url']
     except KeyError: data['infourl'] = 'unknown' 
 
-    opendata = dict()
+    opendata_list = []
     for openitem in item['hours']:
         for openitem_detail in openitem['open']:
-            try: opendata['day'] = openitem_detail['day']
+            opendata = dict()
+            try:
+                opendata['day'] = openitem_detail['day']
+                print(opendata['day'])
             except KeyError: opendata['day'] = 'unknown'
             try: opendata['start'] = openitem_detail['start']
             except KeyError: opendata['start'] = 'unknown'
             try: opendata['end'] = openitem_detail['end']
             except KeyError: opendata['end'] = 'unknown'
-    data['openinfo'] = opendata
+            opendata_list.append(opendata)
+    data['openinfo'] = opendata_list
 
     photourl = []
     try:
@@ -45,6 +49,7 @@ for item in datainfo:
     except KeyError: data['photourl'] = 'unknown'
 
     data['photourl'] = photourl
+    datalist.append(data)
 
-print(json.dumps(data, indent=4))
+print(json.dumps(datalist, indent=4))
 
