@@ -1,0 +1,21 @@
+create table CafeInSanFrancisco (
+	name varchar(32) NOT NULL,
+	address varchar(64) NOT NULL,
+	latitude double(18,14) NOT NULL,
+	longitude double(18,14) NOT NULL,
+	rating float NOT NULL,
+	Monday char(11) NOT NULL,
+	Tuesday char(11) NOT NULL,
+	Wednesday char(11) NOT NULL,
+	Thursday char(11) NOT NULL,
+	Friday char(11) NOT NULL,
+	Saturday char(11) NOT NULL,
+	Sunday char(11) NOT NULL,
+	photourl text(512) NOT NULL,
+	take_out enum('YES', 'NO') NOT NULL,
+	parking enum('YES', 'NO') NOT NULL,
+	bike_parking enum('YES', 'NO') NOT NULL,
+	Good_for_groups enum('YES', 'NO') NOT NULL,
+	ambience varchar(64) NOT NULL,
+	Wi_Fi enum('YES', 'NO') NOT NULL
+);
