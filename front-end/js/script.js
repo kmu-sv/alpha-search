@@ -4,19 +4,18 @@ function initMap() {
     });
 
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var latLngBounds = new google.maps.LatLngBounds();
 
-    var latlngbounds = new google.maps.LatLngBounds();
-
-    for (i = 0; i < locations.length; i++) {
-        var data = locations[i];
+    for (var location = 0; location < locations.length; location++) {
+        var data = locations[location];
         var myLatlng = new google.maps.LatLng(data['lat'], data['lng']);
         var marker = new google.maps.Marker({
             position : myLatlng,
             map: map,
-            label: labels[i % labels.length]
+            label: labels[location % labels.length]
         });
 
-        var idx = i;
+        var idx = location;
         (function (marker, myLatlng, idx) {
             google.maps.event.addListener(marker, "click", function (e) {
                 map.panTo(myLatlng);
@@ -29,14 +28,14 @@ function initMap() {
 
         })(marker, data, idx);
 
-        latlngbounds.extend(marker.position);
+        latLngBounds.extend(marker.position);
 
     }
 
     var bounds = new google.maps.LatLngBounds();
 
-    map.setCenter(latlngbounds.getCenter());
-    map.fitBounds(latlngbounds);
+    map.setCenter(latLngBounds.getCenter());
+    map.fitBounds(latLngBounds);
 
 }
 
@@ -62,5 +61,4 @@ $(document).ready(function () {
 
         }
     );
-
 });
