@@ -1,27 +1,42 @@
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 7,
-        center: locations[0]
+        zoom: 7
     });
-    // Create an array of alphabetical characters used to label the markers.
-    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    // Add some markers to the map.
-    // Note: The code uses the JavaScript Array.prototype.map() method to
-    // create an array of markers based on a given "locations" array.
-    // The map() method here has nothing to do with the Google Maps API.
-    var markers = locations.map(function (location, i) {
-        return new google.maps.Marker({
-            position: location,
-            label: labels[i % labels.length]
-        });
-    });
-    // Add a marker clusterer to manage the markers.
-    var markerCluster = new MarkerClusterer(map, markers,
-        {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 
-    for (i = 0; i < markers.length; i++) {
-        console.log(markers[i]);
+    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var latLngBounds = new google.maps.LatLngBounds();
+
+    for (var location = 0; location < locations.length; location++) {
+        var data = locations[location];
+        var myLatlng = new google.maps.LatLng(data['lat'], data['lng']);
+        var marker = new google.maps.Marker({
+            position : myLatlng,
+            map: map,
+            label: labels[location % labels.length]
+        });
+
+        var idx = location;
+        (function (marker, myLatlng, idx) {
+            google.maps.event.addListener(marker, "click", function (e) {
+                map.panTo(myLatlng);
+                $('.carousel').carousel('set', idx);
+            });
+
+            $('#' + idx.toString() + "").on('click', function (e) {
+                map.panTo(myLatlng);
+            })
+
+        })(marker, data, idx);
+
+        latLngBounds.extend(marker.position);
+
     }
+
+    var bounds = new google.maps.LatLngBounds();
+
+    map.setCenter(latLngBounds.getCenter());
+    map.fitBounds(latLngBounds);
+
 }
 
 // mark random
@@ -46,5 +61,4 @@ $(document).ready(function () {
 
         }
     );
-
 });
