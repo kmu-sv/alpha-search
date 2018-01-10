@@ -25,15 +25,9 @@ function initMap() {
                 map.panTo(myLatlng);
             });
 
-            $('.carousel').on("mouseover", function (e) {
-                var activeCard = $('.active');
-                activeCard.trigger("click");
-            });
-
         })(marker, data, idx);
 
         latLngBounds.extend(marker.position);
-
     }
 
     var bounds = new google.maps.LatLngBounds();
@@ -45,6 +39,8 @@ function initMap() {
 
 // mark random
 var locations = []
+
+var activeCard = null;
 
 for (var i = 0; i < 5; i++) {
     locations.push(
@@ -64,5 +60,14 @@ $(document).ready(function () {
             shift: 10
 
         }
-    ).trigger("mouseover");
+    );
+
+    setInterval(function (e) {
+        var currentActiveCard = $('.active');
+        if (activeCard !== currentActiveCard) {
+            activeCard = currentActiveCard;
+            activeCard.trigger("click");
+        }
+    }, 500);
+
 });
