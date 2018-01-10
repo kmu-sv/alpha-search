@@ -3,7 +3,6 @@ function initMap() {
         zoom: 7
     });
 
-    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     var latLngBounds = new google.maps.LatLngBounds();
 
     for (var location = 0; location < locations.length; location++) {
@@ -12,7 +11,7 @@ function initMap() {
         var marker = new google.maps.Marker({
             position : myLatlng,
             map: map,
-            label: labels[location % labels.length]
+            label: String.fromCharCode(65 + location)
         });
 
         var idx = location;
