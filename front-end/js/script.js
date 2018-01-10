@@ -64,5 +64,5 @@ $(document).ready(function () {
             shift: 10
 
         }
-    );
+    ).trigger("mouseover");
 });
