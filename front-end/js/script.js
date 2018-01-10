@@ -9,7 +9,7 @@ function initMap() {
         var data = locations[location];
         var myLatlng = new google.maps.LatLng(data['lat'], data['lng']);
         var marker = new google.maps.Marker({
-            position : myLatlng,
+            position: myLatlng,
             map: map,
             label: String.fromCharCode(65 + location)
         });
@@ -23,7 +23,12 @@ function initMap() {
 
             $('#' + idx.toString() + "").on('click', function (e) {
                 map.panTo(myLatlng);
-            })
+            });
+
+            $('.carousel').on("mouseover", function (e) {
+                var activeCard = $('.active');
+                activeCard.trigger("click");
+            });
 
         })(marker, data, idx);
 
