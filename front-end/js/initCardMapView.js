@@ -30,10 +30,9 @@ $.getJSON("data.json", function (data) {
     cards.carousel(
         {
             dist: 0,
-            padding: 10,
             fullwidth: true,
+            padding: 10,
             shift: 10
-
         }
     );
 });
@@ -55,9 +54,9 @@ function addMarkerWithTimeout(position, timeout, idx) {
     window.setTimeout(function () {
 
         newMarker = new google.maps.Marker({
+            animation: google.maps.Animation.DROP,
             position: position,
-            map: map,
-            animation: google.maps.Animation.DROP
+            map: map
         });
 
         (function (marker, place, idx) {
