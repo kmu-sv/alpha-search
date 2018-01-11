@@ -1,97 +1,90 @@
-function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 7
+var places = [];
+var markers = [];
+var map;
+
+$.getJSON("data.json", function (data) {
+    var cards = $('.carousel');
+    cards.carousel();
+
+    $.each(data, function (key, place) {
+        places.push(
+            {
+                lat: place['latitude'],
+                lng: place['longitude']
+            }
+        );
+
+        cards.append("" +
+            "<div class='carousel-item' id='" + key.toString() + "'>" +
+            "<div class='card'><div class='card-image'>" +
+            "<img src='" + place['photourl'][0] + "' height='130px'>" +
+            "</div><div class='card-content'><small>" + place['name'] + "\n" + place['address'] +
+            "</small></div></div></div>"
+        );
+
+        if (cards.hasClass('initialized')) {
+            cards.removeClass('initialized')
+        }
     });
 
-    var latLngBounds = new google.maps.LatLngBounds();
+    cards.carousel(
+        {
+            dist: 0,
+            padding: 10,
+            fullwidth: true,
+            shift: 10
 
-    for (var location = 0; location < locations.length; location++) {
-        var data = locations[location];
-        var myLatlng = new google.maps.LatLng(data['lat'], data['lng']);
-        var marker = new google.maps.Marker({
-            position: myLatlng,
+        }
+    );
+});
+
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15
+    });
+}
+
+function drop() {
+    clearMarkers();
+    for (var i = 0; i < places.length; i++) {
+        addMarkerWithTimeout(places[i], i * 200, i);
+    }
+}
+
+function addMarkerWithTimeout(position, timeout, idx) {
+    window.setTimeout(function () {
+
+        newMarker = new google.maps.Marker({
+            position: position,
             map: map,
-            label: String.fromCharCode(65 + location)
+            animation: google.maps.Animation.DROP
         });
 
-        var idx = location;
-        (function (marker, myLatlng, idx) {
+        (function (marker, place, idx) {
             google.maps.event.addListener(marker, "click", function (e) {
-                map.panTo(myLatlng);
+                console.log("click marker");
+                map.panTo(new google.maps.LatLng(place['lat'], place['lng']));
                 $('.carousel').carousel('set', idx);
             });
 
             $('#' + idx.toString() + "").on('click', function (e) {
-                map.panTo(myLatlng);
+                console.log("click card");
+                map.panTo(new google.maps.LatLng(place['lat'], place['lng']));
             });
+        })(newMarker, places[idx], idx);
 
-        })(marker, data, idx);
+        markers.push(newMarker);
+    }, timeout);
+}
 
-        latLngBounds.extend(marker.position);
+function clearMarkers() {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
     }
-
-    var bounds = new google.maps.LatLngBounds();
-
-    map.setCenter(latLngBounds.getCenter());
-    map.fitBounds(latLngBounds);
-
+    markers = [];
 }
 
-// mark random
-var locations = []
-
-for (var i = 0; i < 5; i++) {
-
-    locations.push(
-        {
-            lat: Math.random() * (3) + 3 + 37.7779056,
-            lng: Math.random() * (3) + 3 - 122.414231
-        }
-    )
-}
-
-$(document).ready(function () {
-
-    $.getJSON("data.json", function (data) {
-
-        var cards = []
-        var carousel = $('.carousel');
-        carousel.carousel();
-
-        $.each(data, function (key, place) {
-            carousel.append("" +
-                "<div class='carousel-item' id='" + key.toString() + "'>" +
-                "<div class='card'><div class='card-image'>" +
-                "<img src='" + place['photourl'][0] + "' width='300px' height='130px'>" +
-                "</div><div class='card-content'><small>" + place['name'] + "\n" + place['address'] +
-                "</small></div></div></div>"
-            );
-
-            if (carousel.hasClass('initialized')) {
-                carousel.removeClass('initialized')
-            }
-        });
-
-        carousel.carousel(
-            {
-                dist: 0,
-                padding: 10,
-                fullwidth: true,
-                shift: 10
-
-            }
-        );
-
-    });
-
-    var activeCard = null;
-
-    setInterval(function (e) {
-        var currentActiveCard = $('.active');
-        if (activeCard !== currentActiveCard) {
-            activeCard = currentActiveCard;
-            activeCard.trigger("click");
-        }
-    }, 500);
-
+$(document).ready(function (event) {
+    map.panTo(places[0]);
+    drop();
 });
