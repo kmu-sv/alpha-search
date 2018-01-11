@@ -16,6 +16,6 @@ CREATE TABLE CAFES (
 	parking_available BIT(1) NOT NULL,
 	bike_parking_available BIT(1) NOT NULL,
 	good_for_groups BIT(1) NOT NULL,
-	ambience varchar(64) NOT NULL,
+	ambience VARCHAR(64) NOT NULL,
 	wi_fi_available BIT(1) NOT NULL
 );
