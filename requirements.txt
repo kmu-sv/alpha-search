@@ -1,0 +1,2 @@
+# requests library version
+requests==2.18.4
