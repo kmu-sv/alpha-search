@@ -34,7 +34,6 @@ BUSINESS_PATH = '/v3/businesses/'  # Business ID will come after slash.
 
 # Defaults for our simple example.
 DEFAULT_TERM = 'cafes'
-#DEFAULT_LOCATION = 'San Francisco, CA'
 LATITUDE = 37.778281
 LONGITUDE = -122.411865
 RADIUS = 1000
@@ -62,8 +61,6 @@ def request(host, path, api_key, url_params=None):
 
     return response.json()
 
-
-#def search(api_key, term, location):
 def search(api_key, term, latitude, longitude):
     """Query the Search API by a search term and location.
     Args:
@@ -79,7 +76,6 @@ def search(api_key, term, latitude, longitude):
         'longitude': longitude,
         'radius': RADIUS,
         'open_now': OPEN_NOW.replace(' ', '+'),
-        #'location': location.replace(' ', '+'),
         'limit': SEARCH_LIMIT
     }
     return request(API_HOST, SEARCH_PATH, api_key, url_params=url_params)
@@ -109,7 +105,6 @@ def getYelpData():
     input_values = parser.parse_args()
 
     try:
-        #response = search(API_KEY, input_values.term, input_values.location)
         response = search(API_KEY, input_values.term, input_values.latitude, input_values.longitude)
         businesses = response.get('businesses')
 
@@ -117,9 +112,6 @@ def getYelpData():
         for idx in businesses:
             response = get_business(API_KEY, idx['id'])
             businessList.append(response)
-
-#        with open("result.json", "w") as f:
-#            f.write(json.dumps(businessList, indent=4))
     except HTTPError as error:
         sys.exit(
             'Encountered HTTP error {0} on {1}:\n {2}\nAbort program.'.format(
@@ -129,7 +121,7 @@ def getYelpData():
             )
         )
 
-    # merge loadJsonFile.py
+    # Merge loadJsonFile.py in this file
     datainfo = businessList
 
     datalist = []
@@ -150,8 +142,6 @@ def getYelpData():
         except KeyError: data['phone']= ''
         try: data['rating'] = item['rating']
         except KeyError: data['rating'] = ''
-        #try: data['infourl'] = item['url']
-        #except KeyError: data['infourl'] = ''
 
         opendata_list = []
         for openitem in item['hours']:
