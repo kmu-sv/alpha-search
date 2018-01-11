@@ -69,7 +69,6 @@ def search(api_key, term, latitude, longitude):
     Returns:
         dict: The JSON response from the request.
     """
-    print(latitude, longitude)
     url_params = {
         'term': term.replace(' ', '+'),
         'latitude': latitude,
@@ -92,7 +91,7 @@ def get_business(api_key, business_id):
 
     return request(API_HOST, business_path, api_key)
 
-def getYelpData():
+def getYelpData(lat=37.778163, long=-122.411908):
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-s', '--term', dest='term', default=DEFAULT_TERM,
@@ -105,9 +104,8 @@ def getYelpData():
     input_values = parser.parse_args()
 
     try:
-        response = search(API_KEY, input_values.term, input_values.latitude, input_values.longitude)
+        response = search(API_KEY, input_values.term, lat, long)
         businesses = response.get('businesses')
-
         businessList = []
         for idx in businesses:
             response = get_business(API_KEY, idx['id'])
