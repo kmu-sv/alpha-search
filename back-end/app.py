@@ -9,16 +9,10 @@ and responding for web-client's request, Using flask and redis
 
 """
 from __future__ import print_function
-
 import json
 import os
-
+import uuid, redis, yelpCrawler
 from flask import Flask, request, make_response
-
-import uuid
-import redis
-
-import yelpCrawler
 
 # Flask app should start in global layout
 app = Flask(__name__)
@@ -34,14 +28,21 @@ def webhook():
     # Get json from dialogflow. 
     req = request.get_json(silent=True, force=True)
     res = processWebhookRequest(req)
-
+    speech = "time out test"
+    res = {
+        "speech": speech,
+        "displayText": speech
+    }
     # JSON Encoding
     res = json.dumps(res, indent=VAL_INDENT)
+    # TODO : Remove later
+    print("Response : ")
+    print(res)
+    
+    res_formatted = make_response(res)
+    res_formatted.headers['Content-Type'] = 'application/json'
 
-    r = make_response(res)
-    r.headers['Content-Type'] = 'application/json'
-    return r
-
+    return res_formatted
 
 def processWebhookRequest(req):
     if req.get("result").get("action") != "search.cafe":
@@ -77,6 +78,7 @@ def callCrawler(req) :
 
     data = yelpCrawler.getYelpData(40.703491, -73.913351)
     return data
+
 def makeWebhookResult(data):
     base_url = "ec2-13-124-187-211.ap-northeast-2.compute.amazonaws.com:5000/mappedcafes/"
 
@@ -88,7 +90,7 @@ def makeWebhookResult(data):
     
     # TODO : make a url for webclient
     speech = base_url + token_generated
-
+    
     return {
         "speech": speech,
         "displayText": speech
