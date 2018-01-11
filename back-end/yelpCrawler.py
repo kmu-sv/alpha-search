@@ -91,7 +91,8 @@ def get_business(api_key, business_id):
 
     return request(API_HOST, business_path, api_key)
 
-def getYelpData(lat=37.778163, long=-122.411908):
+# Define default place : wework civic, default wifi='free', default parking='street'
+def getYelpData(lat=37.778264, long=-122.411843, wifi="Free", parking="Street"):
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-s', '--term', dest='term', default=DEFAULT_TERM,
@@ -145,8 +146,7 @@ def getYelpData(lat=37.778163, long=-122.411908):
         for openitem in item['hours']:
             for openitem_detail in openitem['open']:
                 opendata = dict()
-                try:
-                    opendata['day'] = openitem_detail['day']
+                try: opendata['day'] = openitem_detail['day']
                 except KeyError: opendata['day'] = ''
                 try: opendata['start'] = openitem_detail['start']
                 except KeyError: opendata['start'] = ''
@@ -179,6 +179,7 @@ def getYelpData(lat=37.778163, long=-122.411908):
 
         moreinfo = soup.select(".short-def-list > dl")
         for info in moreinfo:
+
             attr_name, attr_content = "", ""
             for dataidx in info.children:
                 if dataidx.name == "dt": #tag_name == dt
@@ -188,7 +189,11 @@ def getYelpData(lat=37.778163, long=-122.411908):
             moreinfo_data[attr_name] = attr_content
 
         data['attributes'] = moreinfo_data
-        datalist.append(data)
+        if data['attributes'].get('Wi-Fi')==wifi and data['attributes'].get('Parking') :
+            datalist.append(data)
+        
+
+
 
     return json.dumps(datalist, indent=4)
 
