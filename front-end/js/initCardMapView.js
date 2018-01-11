@@ -85,5 +85,16 @@ function clearMarkers() {
 
 $(document).ready(function (event) {
     map.panTo(places[0]);
+
+    var activeCard = null;
+
+    setInterval(function (e) {
+        var currentActiveCard = $('.active');
+        if (activeCard !== currentActiveCard) {
+            activeCard = currentActiveCard;
+            activeCard.trigger("click");
+        }
+    }, 500);
+
     drop();
 });
