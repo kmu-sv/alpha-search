@@ -39,7 +39,7 @@ $.getJSON("data.json", function (data) {
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 15
+        zoom: 13
     });
 }
 
