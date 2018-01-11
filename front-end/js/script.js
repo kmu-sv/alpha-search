@@ -40,9 +40,8 @@ function initMap() {
 // mark random
 var locations = []
 
-var activeCard = null;
-
 for (var i = 0; i < 5; i++) {
+
     locations.push(
         {
             lat: Math.random() * (3) + 3 + 37.7779056,
@@ -52,15 +51,40 @@ for (var i = 0; i < 5; i++) {
 }
 
 $(document).ready(function () {
-    $('.carousel').carousel(
-        {
-            dist: 0,
-            padding: 10,
-            fullwidth: true,
-            shift: 10
 
-        }
-    );
+    $.getJSON("data.json", function (data) {
+
+        var cards = []
+        var carousel = $('.carousel');
+        carousel.carousel();
+
+        $.each(data, function (key, place) {
+            carousel.append("" +
+                "<div class='carousel-item' id='" + key.toString() + "'>" +
+                "<div class='card'><div class='card-image'>" +
+                "<img src='" + place['photourl'][0] + "' width='300px' height='130px'>" +
+                "</div><div class='card-content'><small>" + place['name'] + "\n" + place['address'] +
+                "</small></div></div></div>"
+            );
+
+            if (carousel.hasClass('initialized')) {
+                carousel.removeClass('initialized')
+            }
+        });
+
+        carousel.carousel(
+            {
+                dist: 0,
+                padding: 10,
+                fullwidth: true,
+                shift: 10
+
+            }
+        );
+
+    });
+
+    var activeCard = null;
 
     setInterval(function (e) {
         var currentActiveCard = $('.active');
