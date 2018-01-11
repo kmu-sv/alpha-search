@@ -2,19 +2,18 @@
 """
 Author : Hwancheol Kang
 Project : Alpha-search
-Data : 5th, January, 2018
-Description : This script is for back-end service 
-including fulfillment webhook for an Dialogflow agent 
-and responding for web-client's request, Using flask
+Date : January 5, 2018
+Description :
+This script is for back-end service including fulfillment webhook for an Dialogflow agent 
+and responding for web-client's request, Using flask and redis
+
 """
 from __future__ import print_function
 
 import json
 import os
 
-from flask import Flask
-from flask import request
-from flask import make_response
+from flask import Flask, request, make_response
 
 import uuid
 import redis
@@ -25,24 +24,25 @@ app = Flask(__name__)
 # Generate Redis Object
 redis_obj = redis.Redis(host='localhost',port=6379,db=0)
 
+VAL_INDENT = 4 # Constant value for indent
 # This route is for fulfillment webhook for an Dialogflow agent.
 @app.route('/webhook', methods=['POST'])
 def webhook():
     # Get json from dialogflow. 
     req = request.get_json(silent=True, force=True)
 
+    # TODO : remove later
     print("Request:")
-    print(json.dumps(req, indent=4))
+    print(json.dumps(req, indent=VAL_INDENT))
 
     res = processWebhookRequest(req)
 
     # JSON Encoding
-    res = json.dumps(res, indent=4)
+    res = json.dumps(res, indent=VAL_INDENT)
 
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
-
 
 def processWebhookRequest(req):
     if req.get("result").get("action") != "search.cafe":
@@ -62,7 +62,7 @@ def makeQuery(req):
     parameter_facility = parameters.get("mapsort")
     parameter_open = parameters.get("open")
 
-    # TODO : define a query. 
+    # TODO : define a query using parameters. 
     query = ""
     return query
 
