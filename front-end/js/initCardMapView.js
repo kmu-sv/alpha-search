@@ -39,7 +39,7 @@ $.getJSON("data.json", function (data) {
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 13
+        zoom: 14
     });
 }
 
@@ -52,7 +52,6 @@ function drop() {
 
 function addMarkerWithTimeout(position, timeout, idx) {
     window.setTimeout(function () {
-
         newMarker = new google.maps.Marker({
             animation: google.maps.Animation.DROP,
             position: position,
