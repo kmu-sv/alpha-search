@@ -1,8 +1,10 @@
 CREATE TABLE CAFES (
+	id INT PRIMARY KEY AUTO_INCREMENT,
 	name VARCHAR(128) NOT NULL,
 	address VARCHAR(512) NOT NULL,
-	latitude DOUBLE(18,14) NOT NULL,
-	longitude DOUBLE(18,14) NOT NULL,
+	phone_number VARCHAR(20) NOT NULL,
+	latitude DOUBLE(20,16) NOT NULL,
+	longitude DOUBLE(20,16) NOT NULL,
 	rating FLOAT NOT NULL,
 	monday_open_hour CHAR(11) NOT NULL,
 	tuesday_open_hour CHAR(11) NOT NULL,
@@ -12,10 +14,10 @@ CREATE TABLE CAFES (
 	saturday_open_hour CHAR(11) NOT NULL,
 	sunday_open_hour CHAR(11) NOT NULL,
 	photourl TEXT(512) NOT NULL,
-	take_out_available BIT(1) NOT NULL,
-	parking_available BIT(1) NOT NULL,
-	bike_parking_available BIT(1) NOT NULL,
-	good_for_groups BIT(1) NOT NULL,
-	ambience VARCHAR(64) NOT NULL,
-	wi_fi_available BIT(1) NOT NULL
+	take_out_available BIT(1),
+	parking_available BIT(1),
+	bike_parking_available BIT(1),
+	good_for_groups BIT(1),
+	ambience VARCHAR(64),
+	wi_fi_available BIT(1)
 );
