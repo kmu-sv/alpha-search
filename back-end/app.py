@@ -54,7 +54,9 @@ def processWebhookRequest(req):
     # TODO : select data from DB(data shoud be converted to JSON)
     data = "<THIS SHOULD BE CONVERTED TO JSON>"
     """
-    data = callCrawler(req)
+    
+    # TODO : Remove this line later 
+    data = callCrawler(req) # This is just test for service without demo.
     res = makeWebhookResult(data)
     return res
 
@@ -69,6 +71,7 @@ def makeQuery(req):
     query = ""
     return query
 
+# This is just test for service without demo.
 def callCrawler(req) :
     atmosphere = ["UNKNOWN" for i in range(5)]
     wifi = "UNKNOWN"
