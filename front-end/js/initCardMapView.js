@@ -2,40 +2,59 @@ var places = [];
 var markers = [];
 var map;
 
-$.getJSON("data.json", function (data) {
-    var cards = $('.carousel');
-    cards.carousel();
+$.ajax(
+    {
+        url: "http://54.241.216.252:5000/mappedcafes/4235c90663f34d6bb90d4e2c8e2bf875",
+        success: function (data) {
+            var cards = $('.carousel');
+            cards.carousel();
 
-    $.each(data, function (key, place) {
-        places.push(
-            {
-                lat: place['latitude'],
-                lng: place['longitude']
-            }
-        );
+            $.each(data, function (key, place) {
+                places.push(
+                    {
+                        lat: place['latitude'],
+                        lng: place['longitude']
+                    }
+                );
 
-        cards.append("" +
-            "<div class='carousel-item' id='" + key.toString() + "'>" +
-            "<div class='card'><div class='card-image'>" +
-            "<img src='" + place['photourl'][0] + "' height='130px'>" +
-            "</div><div class='card-content'><small>" + place['name'] + "\n" + place['address'] +
-            "</small></div></div></div>"
-        );
+                cards.append("" +
+                    "<div class='carousel-item' id='" + key.toString() + "'>" +
+                    "<div class='card'><div class='card-image'>" +
+                    "<img src='" + place['photourl'][0] + "' height='130px'>" +
+                    "</div><div class='card-content'><small>" + place['name'] + "\n" + place['address'] +
+                    "</small></div></div></div>"
+                );
 
-        if (cards.hasClass('initialized')) {
-            cards.removeClass('initialized')
+                if (cards.hasClass('initialized')) {
+                    cards.removeClass('initialized')
+                }
+            });
+
+            cards.carousel(
+                {
+                    dist: 0,
+                    fullwidth: true,
+                    padding: 10,
+                    shift: 10
+                }
+            );
+
+            map.panTo(places[0]);
+
+            var activeCard = null;
+
+            setInterval(function (e) {
+                var currentActiveCard = $('.active');
+                if (activeCard !== currentActiveCard) {
+                    activeCard = currentActiveCard;
+                    activeCard.trigger("click");
+                }
+            }, 500);
+
+            drop();
         }
-    });
-
-    cards.carousel(
-        {
-            dist: 0,
-            fullwidth: true,
-            padding: 10,
-            shift: 10
-        }
-    );
-});
+    }
+);
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -81,19 +100,3 @@ function clearMarkers() {
     }
     markers = [];
 }
-
-$(document).ready(function (event) {
-    map.panTo(places[0]);
-
-    var activeCard = null;
-
-    setInterval(function (e) {
-        var currentActiveCard = $('.active');
-        if (activeCard !== currentActiveCard) {
-            activeCard = currentActiveCard;
-            activeCard.trigger("click");
-        }
-    }, 500);
-
-    drop();
-});
