@@ -10,6 +10,7 @@ import requests
 import sys
 import urllib
 import os
+import time
 
 try:
     # For Python 3.0 and later
@@ -36,8 +37,8 @@ BUSINESS_PATH = '/v3/businesses/'  # Business ID will come after slash.
 DEFAULT_TERM = 'cafes'
 LATITUDE = 37.778281
 LONGITUDE = -122.411865
-OPEN_NOW = 'false'
-SEARCH_LIMIT = 50
+OPEN_NOW = 'true'
+SEARCH_LIMIT = 20
 DEFAULT_LOCATION = 'San Francisco, CA'
 
 def request(host, path, api_key, url_params=None):
@@ -62,7 +63,7 @@ def request(host, path, api_key, url_params=None):
     return response.json()
 
 #def search(api_key, term, latitude, longitude, offset):
-def search(api_key, term, location, offset):
+def search(api_key, term, location):
     """Query the Search API by a search term and location.
     Args:
         term (str): The search term passed to the API.
@@ -76,8 +77,7 @@ def search(api_key, term, location, offset):
         #'latitude': latitude,
         #'longitude': longitude,
         'open_now': OPEN_NOW.replace(' ', '+'),
-        'limit': SEARCH_LIMIT,
-        'offset': offset
+        'limit': SEARCH_LIMIT
     }
     return request(API_HOST, SEARCH_PATH, api_key, url_params=url_params)
 
@@ -114,95 +114,94 @@ def getYelpData(wifi="YES", parking="YES"):
     total_data_list = []
     search_limit = 50
 
-    for i in range(20):
-        try:
-            #response = search(API_KEY, input_values.term, lat, longi, search_limit*i)
-            response = search(API_KEY, input_values.term, input_values.location, 1 + (search_limit * i))
-            businesses = response.get('businesses')
-            businessList = []
-            for idx in businesses:
-                response = get_business(API_KEY, idx['id'])
-                businessList.append(response)
-        except HTTPError as error:
-            sys.exit(
-                'Encountered HTTP error {0} on {1}:\n {2}\nAbort program.'.format(
-                    error.code,
-                    error.url,
-                    error.read(),
-                )
+    try:
+        #response = search(API_KEY, input_values.term)
+        response = search(API_KEY, input_values.term, input_values.location)
+        businesses = response.get('businesses')
+        businessList = []
+        for idx in businesses:
+            response = get_business(API_KEY, idx['id'])
+            businessList.append(response)
+    except HTTPError as error:
+        sys.exit(
+            'Encountered HTTP error {0} on {1}:\n {2}\nAbort program.'.format(
+                error.code,
+                error.url,
+                error.read(),
             )
+        )
 
-        # Merge loadJsonFile.py in this file
-        datainfo = businessList
+    # Merge loadJsonFile.py in this file
+    datainfo = businessList
 
-        datalist = []
-        for item in datainfo:
-            data = dict()
-            if(item.get('name')): data['name'] = item['name']
-            if(item.get('location')):
-                address = ", ".join(item['location']['display_address'])
-                data['address'] = address
-            if(item['coordinates'].get('latitude')): 
-                data['latitude'] = item['coordinates']['latitude']
-            if(item['coordinates'].get('longitude')):
-                data['longitude'] = item['coordinates']['longitude']
-            if(item.get('display_phone')):
-                data['phone'] = item['display_phone']
-            if(item.get('rating')):
-                data['rating'] = item['rating']
+    datalist = []
+    for item in datainfo:
+        data = dict()
+        if(item.get('name')): data['name'] = item['name']
+        if(item.get('location')):
+            address = ", ".join(item['location']['display_address'])
+            data['address'] = address
+        if(item['coordinates'].get('latitude')): 
+            data['latitude'] = item['coordinates']['latitude']
+        if(item['coordinates'].get('longitude')):
+            data['longitude'] = item['coordinates']['longitude']
+        if(item.get('display_phone')):
+            data['phone'] = item['display_phone']
+        if(item.get('rating')):
+            data['rating'] = item['rating']
 
-            if(item.get('hours')):
-                opendata_list = []
-                for openitem in item['hours']:
-                    for openitem_detail in openitem['open']:
-                        opendata = dict()
-                        if(openitem_detail.get('day')):
-                            opendata['day'] = openitem_detail['day']
-                        if(openitem_detail.get('start')):
-                            opendata['start'] = openitem_detail['start']
-                        if(openitem_detail.get('end')):
-                            opendata['end'] = openitem_detail['end']
-                        opendata_list.append(opendata)
-                data['openinfo'] = opendata_list
+        if(item.get('hours')):
+            opendata_list = []
+            for openitem in item['hours']:
+                for openitem_detail in openitem['open']:
+                    opendata = dict()
+                    if(openitem_detail.get('day')):
+                        opendata['day'] = openitem_detail['day']
+                    if(openitem_detail.get('start')):
+                        opendata['start'] = openitem_detail['start']
+                    if(openitem_detail.get('end')):
+                        opendata['end'] = openitem_detail['end']
+                    opendata_list.append(opendata)
+            data['openinfo'] = opendata_list
 
-            if(item.get('photos')):
-                photourl = []
-                for photoitem in item['photos']:
-                    photourl.append(photoitem)
-                data['photourl'] = photourl
+        if(item.get('photos')):
+            photourl = []
+            for photoitem in item['photos']:
+                photourl.append(photoitem)
+            data['photourl'] = photourl
 
-            # Search more info with beautifulsoup and yelp_url
-            url_text = requests.get(item['url']).text
+        # Search more info with beautifulsoup and yelp_url
+        url_text = requests.get(item['url']).text
 
-            # Beautiful : Translate text to html
-            soup = BeautifulSoup(url_text, "lxml")
+        # Beautiful : Translate text to html
+        soup = BeautifulSoup(url_text, "lxml")
 
-            try:
-                website = soup.select(".biz-website > a")[0].string
-                data['website'] = website
-            except Exception as ex:
-                pass
+        try:
+            website = soup.select(".biz-website > a")[0].string
+            data['website'] = website
+        except Exception as ex:
+            pass
             
-            moreinfo_data = dict()
+        moreinfo_data = dict()
     
-            moreinfo = soup.select(".short-def-list > dl")
-            for info in moreinfo:
-                attr_name, attr_content = "", ""
-                for dataidx in info.children: 
-                    if dataidx.name == "dt": # tag_name == dt
-                        attr_name = dataidx.string.strip() # strip function removes in bracket.
-                    if dataidx.name == "dd": # tag_name == dd
-                        attr_content = dataidx.string.strip()
-                moreinfo_data[attr_name] = attr_content
-            data['attributes'] = moreinfo_data
-            if data['attributes'].get('Wi-Fi') == wifi and data['attributes'].get('Parking') :
-                localtime = time.localtime(time.time())
-                curtime = localtime.tm_hour*100 + localtime.tm_min
+        moreinfo = soup.select(".short-def-list > dl")
+        for info in moreinfo:
+            attr_name, attr_content = "", ""
+            for dataidx in info.children: 
+                if dataidx.name == "dt": # tag_name == dt
+                    attr_name = dataidx.string.strip() # strip function removes in bracket.
+                if dataidx.name == "dd": # tag_name == dd
+                    attr_content = dataidx.string.strip()
+            moreinfo_data[attr_name] = attr_content
+        data['attributes'] = moreinfo_data
+        if data['attributes'].get('Wi-Fi') == wifi and data['attributes'].get('Parking') :
+            datalist.append(data)
 
-                for day in data['openinfo']:
-                    if(day.get('day')==localtime.tm_wday and day.get('open')>curtime and day.get('close')<curtime):
-                        datalist.append(data)
-        total_data_list = total_data_list + datalist
+
+
+
+
+    total_data_list = total_data_list + datalist
 
     return json.dumps(total_data_list, indent=4)
 
