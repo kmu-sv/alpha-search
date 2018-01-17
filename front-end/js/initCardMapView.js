@@ -4,7 +4,7 @@ var map;
 
 $.ajax(
     {
-        url: "http://54.241.216.252:5000/mappedcafes/4235c90663f34d6bb90d4e2c8e2bf875",
+        url: "http://alpha-search.in:5000/mappedcafes/4235c90663f34d6bb90d4e2c8e2bf875",
         success: function (data) {
             var cards = $('.carousel');
             cards.carousel();
