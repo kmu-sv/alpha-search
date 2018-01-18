@@ -11,7 +11,7 @@ and responding for web-client's request, Using flask and redis
 from __future__ import print_function
 import json
 import os
-import uuid, redis, yelpCrawler
+import uuid, redis, yelpCrawler, Decorator_for_HTTP
 from flask import Flask, request, make_response
 
 # Flask app should start in global layout
@@ -101,11 +101,11 @@ def callCrawler(req) :
     if parameter_open != None :
         open = "YES"
 
-    data = yelpCrawler.getYelpData(40.703491, -73.913351, wifi, parking, open)
+    data = yelpCrawler.getYelpData(40.703491, -73.913351, wifi, parking)
     return data
 
 def makeWebhookResult(data):
-    base_url = "alpha-search.io/"
+    base_url = "alpha-search.in/"
 
     # Generate token
     token_generated = str(uuid.uuid4()).replace("-", "")
