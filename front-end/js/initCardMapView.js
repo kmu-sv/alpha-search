@@ -6,14 +6,14 @@ var paramsList = location.search.substring(1).split("&");
 
 function paramsFunc(paramsNm) {
     var nullChk = "";
-    for(var i=0; i<paramsList.length; i++) {
-        if(paramsNm == paramsList[i].split("=")[0]) {
+    for (var i = 0; i < paramsList.length; i++) {
+        if (paramsNm == paramsList[i].split("=")[0]) {
             return paramsList[i].split("=")[1];
-        }else {
-            if(i == paramsList.length-1) nullChk = true;
+        } else {
+            if (i == paramsList.length - 1) nullChk = true;
         }
     }
-    if(nullChk) {
+    if (nullChk) {
         alert("Not found parameter");
     }
 }
@@ -21,6 +21,12 @@ function paramsFunc(paramsNm) {
 $.ajax(
     {
         url: "http://www.alpha-search.in:5000/mappedcafes/" + paramsFunc("token"),
+
+        complete: function () {
+            $('.preloader-background').delay(1700).fadeOut('slow');
+            $('.preloader-wrapper').delay(1700).fadeOut();
+        },
+
         success: function (data) {
             var cards = $('.carousel');
             cards.carousel();
