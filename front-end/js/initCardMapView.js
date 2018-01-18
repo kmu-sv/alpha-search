@@ -2,9 +2,25 @@ var places = [];
 var markers = [];
 var map;
 
+var paramsList = location.search.substring(1).split("&");
+
+function paramsFunc(paramsNm) {
+    var nullChk = "";
+    for(var i=0; i<paramsList.length; i++) {
+        if(paramsNm == paramsList[i].split("=")[0]) {
+            return paramsList[i].split("=")[1];
+        }else {
+            if(i == paramsList.length-1) nullChk = true;
+        }
+    }
+    if(nullChk) {
+        alert("Not found parameter");
+    }
+}
+
 $.ajax(
     {
-        url: "http://alpha-search.in:5000/mappedcafes/4235c90663f34d6bb90d4e2c8e2bf875",
+        url: "http://www.alpha-search.in:5000/mappedcafes/" + paramsFunc("token"),
         success: function (data) {
             var cards = $('.carousel');
             cards.carousel();
