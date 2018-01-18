@@ -61,11 +61,35 @@ def processWebhookRequest(req):
     return res
 
 def makeQuery(req):
+    atmosphere = ["UNKNOWN" for i in range(7)]
+    wifi = "UNKNOWN"
+    parking = "UNKNOWN"
+
     result = req.get("result")
     parameters = result.get("parameters")
     parameter_atmosphere = parameters.get("atmosphere")
     parameter_facility = parameters.get("mapsort")
-    parameter_open = parameters.get("open")
+
+    if parameter_atmosphere.get("quiet") != None :
+        atmosphere[0] = "quiet"
+    if parameter_atmosphere.get("casual") != None :
+        atmosphere[1] = "casual"
+    if parameter_atmosphere.get("cosy") != None :
+        atmosphere[2] = "cosy"
+    if parameter_atmosphere.get("romantic") != None :
+        atmosphere[3] = "romantic"
+    if parameter_atmosphere.get("classy") != None :
+        atmosphere[4] = "classy"
+    if parameter_atmosphere.get("trendy") != None :
+        atmosphere[5] = "trendy"
+    if parameter_atmosphere.get("hipster") != None :
+        atmosphere[6] = "hipster"
+    
+    if parameter_facility.get("wifi") != None :
+        wifi = "YES"
+    if parameter_facility.get("parking") != None :
+        parking = "YES"
+
 
     # TODO : define a query using parameters. 
     query = ""
@@ -73,33 +97,34 @@ def makeQuery(req):
 
 # This is just test for service without demo.
 def callCrawler(req) :
-    atmosphere = ["UNKNOWN" for i in range(5)]
+    atmosphere = ["UNKNOWN" for i in range(7)]
     wifi = "UNKNOWN"
     parking = "UNKNOWN"
-    open = "UNKNOWN"
 
     result = req.get("result")
     parameters = result.get("parameters")
     parameter_atmosphere = parameters.get("atmosphere")
     parameter_facility = parameters.get("mapsort")
-    parameter_open = parameters.get("open")
-    
+
     if parameter_atmosphere.get("quiet") != None :
         atmosphere[0] = "quiet"
     if parameter_atmosphere.get("casual") != None :
         atmosphere[1] = "casual"
     if parameter_atmosphere.get("cosy") != None :
         atmosphere[2] = "cosy"
-    if parameter_atmosphere.get("hip") != None :
-        atmosphere[3] = "hip"
     if parameter_atmosphere.get("romantic") != None :
-        atmosphere[4] = "romantic"
+        atmosphere[3] = "romantic"
+    if parameter_atmosphere.get("classy") != None :
+        atmosphere[4] = "classy"
+    if parameter_atmosphere.get("trendy") != None :
+        atmosphere[5] = "trendy"
+    if parameter_atmosphere.get("hipster") != None :
+        atmosphere[6] = "hipster"
+    
     if parameter_facility.get("wifi") != None :
         wifi = "YES"
     if parameter_facility.get("parking") != None :
         parking = "YES"
-    if parameter_open != None :
-        open = "YES"
 
     data = yelpCrawler.getYelpData(40.703491, -73.913351, wifi, parking)
     return data
@@ -121,7 +146,8 @@ def makeWebhookResult(data):
         "displayText": speech
     }
 
-@app.route('/mappedcafes/<token>', methods = ['POST', 'GET'])
+@app.route('/mappedcafes/<token>', methods = ['POST', 'GET', 'OPTIONS'])
+@Decorator_for_HTTP.crossdomain(origin='*')
 def getCafes(token) :
     # Get data mapped token from redis table 
     data = redis_obj.get(token)
