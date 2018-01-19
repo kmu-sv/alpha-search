@@ -139,7 +139,7 @@ def makeWebhookResult(data):
     redis_obj.set(token_generated, data)
     # 
     # TODO : make a url for webclient
-    speech = base_url + token_generated
+    speech = base_url + "?token=" + token_generated
     
     return {
         "speech": speech,
