@@ -111,7 +111,7 @@ def getYelpData(wifi="Free", parking="Street"):
     total_data_list = []
     search_limit = 50
 
-    for i in range(20):
+    for i in range(17):
         try:
             #response = search(API_KEY, input_values.term, lat, longi, search_limit*i)
             response = search(API_KEY, input_values.term, input_values.location, 1 + (search_limit * i))
