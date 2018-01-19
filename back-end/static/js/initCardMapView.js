@@ -20,7 +20,7 @@ function paramsFunc(paramsNm) {
 
 $.ajax(
     {
-        url: "http://www.alpha-search.in:5000/mappedcafes/" + paramsFunc("token"),
+        url: "http://54.241.216.252:5000/mappedcafes/" + paramsFunc("token"),
 
         complete: function () {
             $('.preloader-background').delay(1700).fadeOut('slow');

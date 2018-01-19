@@ -12,7 +12,7 @@ from __future__ import print_function
 import json
 import os
 import uuid, redis, yelpCrawler, Decorator_for_HTTP
-from flask import Flask, request, make_response
+from flask import Flask, request, make_response, render_template
 
 # Flask app should start in global layout
 app = Flask(__name__)
@@ -137,7 +137,7 @@ def makeWebhookResult(data):
 
     # insert mapping data to redis table
     redis_obj.set(token_generated, data)
-    
+    # 
     # TODO : make a url for webclient
     speech = base_url + token_generated
     
@@ -157,6 +157,10 @@ def getCafes(token) :
         mimetype='application/json'
     )
     return response
+
+@app.route('/')
+def index() :
+    return render_template("index.html")
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
