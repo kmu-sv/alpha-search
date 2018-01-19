@@ -2,81 +2,68 @@ var places = [];
 var markers = [];
 var map;
 
-var paramsList = location.search.substring(1).split("&");
+function setToken(token) {
+    console.log(token);
+    $.ajax(
+        {
+            url: "http://54.241.216.252:5000/mappedcafes/" + token,
 
-function paramsFunc(paramsNm) {
-    var nullChk = "";
-    for (var i = 0; i < paramsList.length; i++) {
-        if (paramsNm == paramsList[i].split("=")[0]) {
-            return paramsList[i].split("=")[1];
-        } else {
-            if (i == paramsList.length - 1) nullChk = true;
-        }
-    }
-    if (nullChk) {
-        alert("Not found parameter");
-    }
-}
+            complete: function () {
+                $('.preloader-background').delay(1700).fadeOut('slow');
+                $('.preloader-wrapper').delay(1700).fadeOut();
+            },
 
-$.ajax(
-    {
-        url: "http://54.241.216.252:5000/mappedcafes/" + paramsFunc("token"),
+            success: function (data) {
+                var cards = $('.carousel');
+                cards.carousel();
 
-        complete: function () {
-            $('.preloader-background').delay(1700).fadeOut('slow');
-            $('.preloader-wrapper').delay(1700).fadeOut();
-        },
+                $.each(data, function (key, place) {
+                    places.push(
+                        {
+                            lat: place['latitude'],
+                            lng: place['longitude']
+                        }
+                    );
 
-        success: function (data) {
-            var cards = $('.carousel');
-            cards.carousel();
+                    cards.append("" +
+                        "<div class='carousel-item' id='" + key.toString() + "'>" +
+                        "<div class='card'><div class='card-image'>" +
+                        "<img src='" + place['photourl'][0] + "' height='130px'>" +
+                        "</div><div class='card-content'><small>" + place['name'] + "\n" + place['address'] +
+                        "</small></div></div></div>"
+                    );
 
-            $.each(data, function (key, place) {
-                places.push(
+                    if (cards.hasClass('initialized')) {
+                        cards.removeClass('initialized')
+                    }
+                });
+
+                cards.carousel(
                     {
-                        lat: place['latitude'],
-                        lng: place['longitude']
+                        dist: 0,
+                        fullwidth: true,
+                        padding: 10,
+                        shift: 10
                     }
                 );
 
-                cards.append("" +
-                    "<div class='carousel-item' id='" + key.toString() + "'>" +
-                    "<div class='card'><div class='card-image'>" +
-                    "<img src='" + place['photourl'][0] + "' height='130px'>" +
-                    "</div><div class='card-content'><small>" + place['name'] + "\n" + place['address'] +
-                    "</small></div></div></div>"
-                );
+                map.panTo(places[0]);
 
-                if (cards.hasClass('initialized')) {
-                    cards.removeClass('initialized')
-                }
-            });
+                var activeCard = null;
 
-            cards.carousel(
-                {
-                    dist: 0,
-                    fullwidth: true,
-                    padding: 10,
-                    shift: 10
-                }
-            );
+                setInterval(function (e) {
+                    var currentActiveCard = $('.active');
+                    if (activeCard !== currentActiveCard) {
+                        activeCard = currentActiveCard;
+                        activeCard.trigger("click");
+                    }
+                }, 500);
 
-            map.panTo(places[0]);
-
-            var activeCard = null;
-
-            setInterval(function (e) {
-                var currentActiveCard = $('.active');
-                if (activeCard !== currentActiveCard) {
-                    activeCard = currentActiveCard;
-                    activeCard.trigger("click");
-                }
-            }, 500);
-
-            drop();
+                drop();
+            }
         }
-    }
-);
+    );
+}
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
