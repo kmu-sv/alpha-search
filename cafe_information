@@ -1,0 +1,23 @@
+CREATE TABLE CAFES (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(128) NOT NULL,
+	address VARCHAR(512) NOT NULL,
+	phone_number VARCHAR(20) NOT NULL,
+	latitude DOUBLE(20,16) NOT NULL,
+	longitude DOUBLE(20,16) NOT NULL,
+	rating FLOAT NOT NULL,
+	monday_open_hour CHAR(11) NOT NULL,
+	tuesday_open_hour CHAR(11) NOT NULL,
+	wednesday_open_hour CHAR(11) NOT NULL,
+	thursday_open_hour CHAR(11) NOT NULL,
+	friday_open_hour CHAR(11) NOT NULL,
+	saturday_open_hour CHAR(11) NOT NULL,
+	sunday_open_hour CHAR(11) NOT NULL,
+	photourl TEXT(512) NOT NULL,
+	take_out_available BIT(1),
+	parking_available BIT(1),
+	bike_parking_available BIT(1),
+	good_for_groups BIT(1),
+	ambience VARCHAR(64),
+	wi_fi_available BIT(1)
+);
