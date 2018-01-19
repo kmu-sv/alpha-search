@@ -28,11 +28,7 @@ def webhook():
     # Get json from dialogflow. 
     req = request.get_json(silent=True, force=True)
     res = processWebhookRequest(req)
-    speech = "time out test"
-    res = {
-        "speech": speech,
-        "displayText": speech
-    }
+    
     # JSON Encoding
     res = json.dumps(res, indent=VAL_INDENT)
     # TODO : Remove later
