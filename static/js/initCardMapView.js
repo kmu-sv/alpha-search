@@ -3,7 +3,6 @@ var markers = [];
 var map;
 
 function setToken(token) {
-    console.log(token);
     $.ajax(
         {
             url: "http://54.241.216.252:5000/mappedcafes/" + token,
