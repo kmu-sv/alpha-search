@@ -2,81 +2,81 @@ var places = [];
 var markers = [];
 var map;
 
-var paramsList = location.search.substring(1).split("&");
+function setToken(token) {
 
-function paramsFunc(paramsNm) {
-    var nullChk = "";
-    for (var i = 0; i < paramsList.length; i++) {
-        if (paramsNm == paramsList[i].split("=")[0]) {
-            return paramsList[i].split("=")[1];
-        } else {
-            if (i == paramsList.length - 1) nullChk = true;
-        }
-    }
-    if (nullChk) {
-        alert("Not found parameter");
-    }
-}
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
 
-$.ajax(
-    {
-        url: "http://54.241.216.252:5000/mappedcafes/" + paramsFunc("token"),
+            console.log(pos);
 
-        complete: function () {
-            $('.preloader-background').delay(1700).fadeOut('slow');
-            $('.preloader-wrapper').delay(1700).fadeOut();
-        },
-
-        success: function (data) {
-            var cards = $('.carousel');
-            cards.carousel();
-
-            $.each(data, function (key, place) {
-                places.push(
-                    {
-                        lat: place['latitude'],
-                        lng: place['longitude']
-                    }
-                );
-
-                cards.append("" +
-                    "<div class='carousel-item' id='" + key.toString() + "'>" +
-                    "<div class='card'><div class='card-image'>" +
-                    "<img src='" + place['photourl'][0] + "' height='130px'>" +
-                    "</div><div class='card-content'><small>" + place['name'] + "\n" + place['address'] +
-                    "</small></div></div></div>"
-                );
-
-                if (cards.hasClass('initialized')) {
-                    cards.removeClass('initialized')
-                }
-            });
-
-            cards.carousel(
+            $.ajax(
                 {
-                    dist: 0,
-                    fullwidth: true,
-                    padding: 10,
-                    shift: 10
+                    url: "http://54.241.216.252:5000/mappedcafes/" + token,
+
+                    complete: function () {
+                        $('.preloader-background').delay(1700).fadeOut('slow');
+                        $('.preloader-wrapper').delay(1700).fadeOut();
+                    },
+
+                    success: function (data) {
+                        var cards = $('.carousel');
+                        cards.carousel();
+
+                        $.each(data, function (key, place) {
+                            places.push(
+                                {
+                                    lat: place['latitude'],
+                                    lng: place['longitude']
+                                }
+                            );
+
+                            cards.append("" +
+                                "<div class='carousel-item' id='" + key.toString() + "'>" +
+                                "<div class='card'><div class='card-image'>" +
+                                "<img src='" + place['photourl'][0] + "' height='130px'>" +
+                                "</div><div class='card-content'><small>" + place['name'] + "\n" + place['address'] +
+                                "</small></div></div></div>"
+                            );
+
+                            if (cards.hasClass('initialized')) {
+                                cards.removeClass('initialized')
+                            }
+                        });
+
+                        cards.carousel(
+                            {
+                                dist: 0,
+                                fullwidth: true,
+                                padding: 10,
+                                shift: 10
+                            }
+                        );
+
+                        map.panTo(places[0]);
+
+                        var activeCard = null;
+
+                        setInterval(function (e) {
+                            var currentActiveCard = $('.active');
+                            if (activeCard !== currentActiveCard) {
+                                activeCard = currentActiveCard;
+                                activeCard.trigger("click");
+                            }
+                        }, 500);
+
+                        drop();
+                    }
                 }
             );
 
-            map.panTo(places[0]);
 
-            var activeCard = null;
-
-            setInterval(function (e) {
-                var currentActiveCard = $('.active');
-                if (activeCard !== currentActiveCard) {
-                    activeCard = currentActiveCard;
-                    activeCard.trigger("click");
-                }
-            }, 500);
-
-            drop();
-        }
+        })
     }
-);
+}
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
