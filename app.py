@@ -9,9 +9,9 @@ and responding for web-client's request, Using flask and redis
 
 """
 from __future__ import print_function
-import json
-import os
-import uuid, redis, yelpCrawler, Decorator_for_HTTP
+import json, os, uuid, redis, pymysql
+# import custom modules
+import yelpCrawler, Decorator_for_HTTP
 from flask import Flask, request, make_response, render_template
 
 # Flask app should start in global layout
@@ -20,8 +20,13 @@ app = Flask(__name__)
 # Generate Redis Object
 redis_obj = redis.StrictRedis(host="localhost", port=6379, db=0)
 
+# Connect to MySQL and Generete dictionary cursor from connection
+sql_conn = pymysql.connect(host='localhost', user='gaeul', password='alpha', db='CAFE', charset='utf8mb4')
+curs = sql_conn.cursor(pymysql.cursors.DictCursor)
+
 # Constant for indent
 VAL_INDENT = 4
+
 # This route is for fulfillment webhook for an Dialogflow agent.
 @app.route('/webhook', methods=['POST', 'GET'])
 def webhook():
@@ -31,10 +36,7 @@ def webhook():
     
     # JSON Encoding
     res = json.dumps(res, indent=VAL_INDENT)
-    # TODO : Remove later
-    print("Response : ")
-    print(res)
-    
+
     res_formatted = make_response(res)
     res_formatted.headers['Content-Type'] = 'application/json'
 
@@ -43,20 +45,12 @@ def webhook():
 def processWebhookRequest(req):
     if req.get("result").get("action") != "search.cafe":
         return {}
-    """
-    query = makeQuery(req)
-    if query is None:
-        return {}
-    # TODO : select data from DB(data shoud be converted to JSON)
-    data = "<THIS SHOULD BE CONVERTED TO JSON>"
-    """
     
-    # TODO : Remove this line later 
-    data = callCrawler(req) # This is just test for service without demo.
+    data = parseEntity(req) # data contains entities.
     res = makeWebhookResult(data)
     return res
 
-def makeQuery(req):
+def parseEntity(req) :
     atmosphere = ["UNKNOWN" for i in range(7)]
     wifi = "UNKNOWN"
     parking = "UNKNOWN"
@@ -64,69 +58,72 @@ def makeQuery(req):
     result = req.get("result")
     parameters = result.get("parameters")
     parameter_atmosphere = parameters.get("atmosphere")
-    parameter_facility = parameters.get("mapsort")
-
-    if parameter_atmosphere.get("quiet") != None :
-        atmosphere[0] = "quiet"
-    if parameter_atmosphere.get("casual") != None :
-        atmosphere[1] = "casual"
-    if parameter_atmosphere.get("cosy") != None :
-        atmosphere[2] = "cosy"
-    if parameter_atmosphere.get("romantic") != None :
-        atmosphere[3] = "romantic"
-    if parameter_atmosphere.get("classy") != None :
-        atmosphere[4] = "classy"
-    if parameter_atmosphere.get("trendy") != None :
-        atmosphere[5] = "trendy"
-    if parameter_atmosphere.get("hipster") != None :
-        atmosphere[6] = "hipster"
+    parameter_facility = parameters.get("facility")
+    # if parameter_atmosphere.get("quiet") != None :
+    #     atmosphere[0] = "quiet"
+    # if parameter_atmosphere.get("casual") != None :
+    #     atmosphere[1] = "casual"
+    # if parameter_atmosphere.get("cosy") != None :
+    #     atmosphere[2] = "cosy"
+    # if parameter_atmosphere.get("romantic") != None :
+    #     atmosphere[3] = "romantic"
+    # if parameter_atmosphere.get("classy") != None :
+    #     atmosphere[4] = "classy"
+    # if parameter_atmosphere.get("trendy") != None :
+    #     atmosphere[5] = "trendy"
+    # if parameter_atmosphere.get("hipster") != None :
+    #     atmosphere[6] = "hipster"
     
-    if parameter_facility.get("wifi") != None :
+    if 'wifi' in parameter_facility :
         wifi = "YES"
-    if parameter_facility.get("parking") != None :
+    if 'parking' in parameter_facility :
         parking = "YES"
 
-
-    # TODO : define a query using parameters. 
-    query = ""
-    return query
-
-# This is just test for service without demo.
-def callCrawler(req) :
-    atmosphere = ["UNKNOWN" for i in range(7)]
-    wifi = "UNKNOWN"
-    parking = "UNKNOWN"
-
-    result = req.get("result")
-    parameters = result.get("parameters")
-    parameter_atmosphere = parameters.get("atmosphere")
-    parameter_facility = parameters.get("mapsort")
-
-    if parameter_atmosphere.get("quiet") != None :
-        atmosphere[0] = "quiet"
-    if parameter_atmosphere.get("casual") != None :
-        atmosphere[1] = "casual"
-    if parameter_atmosphere.get("cosy") != None :
-        atmosphere[2] = "cosy"
-    if parameter_atmosphere.get("romantic") != None :
-        atmosphere[3] = "romantic"
-    if parameter_atmosphere.get("classy") != None :
-        atmosphere[4] = "classy"
-    if parameter_atmosphere.get("trendy") != None :
-        atmosphere[5] = "trendy"
-    if parameter_atmosphere.get("hipster") != None :
-        atmosphere[6] = "hipster"
-    
-    if parameter_facility.get("wifi") != None :
-        wifi = "YES"
-    if parameter_facility.get("parking") != None :
-        parking = "YES"
-
-    data = yelpCrawler.getYelpData(40.703491, -73.913351, wifi, parking)
+    data = {
+        'atmosphere' : {
+            'quiet' : atmosphere[0],
+            'casual' : atmosphere[1],
+            'cosy' : atmosphere[2],
+            'romantic' : atmosphere[3],
+            'classy' : atmosphere[4],
+            'trendy' : atmosphere[5],
+            'hipster' : atmosphere[6],
+        },
+        'wifi' : wifi,
+        'parking' : parking,
+        'location' : {
+            'latitude' : '37.777905600000000',
+            'longitude' : '-122.414220300000000'
+        }
+    }
     return data
 
+def makeQuery(entities_):
+    entities_s = entities_.decode("utf-8")
+    entities = json.loads(entities_s)
+    query = "select * from CAFES where "
+    for entity in entities :
+        # TODO : remove later
+        if(entity == 'atmosphere') :
+            continue
+        if(entity == 'location') :
+            query = query + "and latitude=" 
+            query = query + entities['location']['latitude'] + "and longitude" 
+            query = query + entities['location']['longitude']
+            continue
+        print (entity)
+        query = query + "and " + entity 
+        query = query + "=" + str(entities[entity])
+    return query
+
+def getDatafromDB(query) :
+    curs.execute(query)
+    data = curs.fetchall()
+    return json.dumps(data)
+
 def makeWebhookResult(data):
-    base_url = "alpha-search.in/"
+    base_url = "alpha-search.in:5000/"
+    #base_url = "54.241.216.252:5000/"
 
     # Generate token
     token_generated = str(uuid.uuid4()).replace("-", "")
@@ -147,8 +144,11 @@ def makeWebhookResult(data):
 def getCafes(token) :
     # Get data mapped token from redis table 
     data = redis_obj.get(token)
+    query = makeQuery(data)
+    print(query)
+    result = getDatafromDB(query)
     response = app.response_class(
-        response=data,
+        response=result,
         status=200,
         mimetype='application/json'
     )
