@@ -3,11 +3,11 @@ var markers = [];
 var map;
 
 String.prototype.format = function () {
-    a = this;
+    string = this;
     for (k in arguments) {
-        a = a.replace("{" + k + "}", arguments[k])
+        string = string.replace("{" + k + "}", arguments[k])
     }
-    return a
+    return string
 };
 
 function initMap() {
@@ -54,7 +54,6 @@ function clearMarkers() {
     }
     markers = [];
 }
-
 
 if (navigator.geolocation) {
     console.log('Geolocation is supported!');
@@ -140,7 +139,6 @@ window.onload = function () {
                 }
             }
         );
-
     };
     navigator.geolocation.getCurrentPosition(geoSuccess);
 };
