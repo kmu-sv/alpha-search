@@ -69,14 +69,14 @@ window.onload = function () {
 
         var token = $("#token").val();
 
-        urlAPI = "http://54.241.216.252:5000/mappedcafes/{0}/{1}/{2}"
+        urlAPI = "https://54.241.216.252:5000/mappedcafes/{0}/{1}/{2}"
             .format(
                 token,
                 startPos.coords.latitude,
                 startPos.coords.longitude
             );
 
-        tmpUrl = "http://54.241.216.252:5002/mappedcafes/4235c90663f34d6bb90d4e2c8e2bf875";
+        tmpUrl = "https://54.241.216.252:5002/mappedcafes/4235c90663f34d6bb90d4e2c8e2bf875";
 
         console.log(urlAPI);
 
