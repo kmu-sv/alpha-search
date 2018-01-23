@@ -25,13 +25,12 @@ def webhook():
     # Get json from dialogflow. 
     req = request.get_json(silent=True, force=True)
     res = processWebhookRequest(req)
-    
     # JSON Encoding
     res = json.dumps(res, indent=VAL_INDENT)
 
     res_formatted = make_response(res)
     res_formatted.headers['Content-Type'] = 'application/json'
-
+    print(res_formatted)
     return res_formatted
 
 def processWebhookRequest(req):
