@@ -59,6 +59,7 @@ def parseEntity(req) :
     parameters = result.get("parameters")
     parameter_atmosphere = parameters.get("atmosphere")
     parameter_facility = parameters.get("facility")
+    # parsing atmospheres
     if "quiet" in parameter_atmosphere :
          atmosphere[0] = "quiet"
     if "casual" in parameter_atmosphere :
@@ -73,7 +74,7 @@ def parseEntity(req) :
          atmosphere[5] = "trendy"
     if "hipster" in parameter_atmosphere :
          atmosphere[6] = "hipster"
-    
+    # parsing facilities
     if 'wifi' in parameter_facility :
         wifi = "1"
     if 'parking' in parameter_facility :
