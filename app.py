@@ -108,8 +108,8 @@ def getDatafromDB(query) :
     return json.dumps(data)
 
 def makeWebhookResult(data):
-    base_url = "alpha-search.in:5000/"
-    #base_url = "54.241.216.252:5000/"
+    base_url = "https://alpha-search.in:5000/"
+    #base_url = "https://54.241.216.252:5000/"
 
     # Generate token
     token_generated = str(uuid.uuid4()).replace("-", "")
@@ -125,9 +125,10 @@ def makeWebhookResult(data):
 
 @app.route('/mappedcafes/<token>/<latitude>/<longitude>', methods = ['POST', 'GET', 'OPTIONS'])
 @Decorator_for_HTTP.crossdomain(origin='*')
-def getCafes(token) :
+def getCafes(token, latitude, longitude) :
     # Get data mapped token from redis table 
-    print(token)
+    print("token : ", token)
+    print("latitude : ", latitude, "longitude : ", longitude)
     data = redis_obj.get(token)
     print(data)
     query = makeQuery(data)
