@@ -52,8 +52,8 @@ def processWebhookRequest(req):
 
 def parseEntity(req) :
     atmosphere = ["UNKNOWN" for i in range(7)]
-    wifi = "UNKNOWN"
-    parking = "UNKNOWN"
+    wifi = "0"
+    parking = "0"
 
     result = req.get("result")
     parameters = result.get("parameters")
@@ -75,9 +75,9 @@ def parseEntity(req) :
     #     atmosphere[6] = "hipster"
     
     if 'wifi' in parameter_facility :
-        wifi = "YES"
+        wifi = "1"
     if 'parking' in parameter_facility :
-        parking = "YES"
+        parking = "1"
 
     data = {
         'atmosphere' : {
@@ -98,22 +98,8 @@ def parseEntity(req) :
     }
     return data
 
-def makeQuery(entities_):
-    entities_s = entities_.decode("utf-8")
-    entities = json.loads(entities_s)
-    query = "select * from CAFES where "
-    for entity in entities :
-        # TODO : remove later
-        if(entity == 'atmosphere') :
-            continue
-        if(entity == 'location') :
-            query = query + "and latitude=" 
-            query = query + entities['location']['latitude'] + "and longitude" 
-            query = query + entities['location']['longitude']
-            continue
-        print (entity)
-        query = query + "and " + entity 
-        query = query + "=" + str(entities[entity])
+def makeQuery(entities):
+    query = "select * from CAFES where " + "wifi=" + entities['wifi'] + " and parking=" + entities['parking']
     return query
 
 def getDatafromDB(query) :
@@ -130,23 +116,24 @@ def makeWebhookResult(data):
 
     # insert mapping data to redis table
     redis_obj.set(token_generated, data)
-    # 
-    # TODO : make a url for webclient
-    speech = base_url + "?token=" + token_generated
+    speech = base_url + token_generated
     
     return {
         "speech": speech,
         "displayText": speech
     }
 
-@app.route('/mappedcafes/<token>', methods = ['POST', 'GET', 'OPTIONS'])
+@app.route('/mappedcafes/<token>/<latitude>/<longitude>', methods = ['POST', 'GET', 'OPTIONS'])
 @Decorator_for_HTTP.crossdomain(origin='*')
 def getCafes(token) :
     # Get data mapped token from redis table 
+    print(token)
     data = redis_obj.get(token)
+    print(data)
     query = makeQuery(data)
     print(query)
     result = getDatafromDB(query)
+    # TODO : filter data based on location
     response = app.response_class(
         response=result,
         status=200,
@@ -154,8 +141,10 @@ def getCafes(token) :
     )
     return response
 
-@app.route('/<token>')
+@app.route('/<token>', methods = ['POST', 'GET', 'OPTIONS'])
+@Decorator_for_HTTP.crossdomain(origin='*')
 def index(token) :
+    print(token)
     return render_template("index.html", token=token)
 
 if __name__ == '__main__':
