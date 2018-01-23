@@ -134,7 +134,6 @@ window.onload = function () {
                             activeCard.trigger("click");
                         }
                     }, 500);
-
                     drop();
                 }
             }
