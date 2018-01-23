@@ -3,7 +3,8 @@
 # input : list organized by python dictionary
 # output : print (insert success or fail)
 
-import test_list
+#import test_list
+import json
 import pymysql
 
 record_values = ['name_value', 'address_value', 'phone_number_value', 'latitude_value', 'longitude_value', \
@@ -49,9 +50,17 @@ def getRecord(cafes):
         recordIndex = 0
         #loop for storing data for the cafe
         for infoIndex in range (len(extracted_info)):
-        	# if data doesn't exists, store 'NULL'
-            if cafes[cafeIndex].get(extracted_info[infoIndex]) == 0:
-                record_values[recordIndex] = 'NULL'
+            # if data doesn't exists, store 'NULL' 
+            isExist = cafes[cafeIndex].get(extracted_info[infoIndex], 0)
+            if isExist == 0 :
+                if extracted_info[infoIndex] == 'openinfo' :
+                    print ('this is openinfo')
+                    for day in range(7):
+                        record_values[recordIndex] == 'NULL'
+                        recordIndex+=1
+                else :
+                	record_values[recordIndex] = 'NULL'
+                	recordIndex+=1
             # if data exists, store the corresponded data
             else :
                 print (cafeIndex,infoIndex)
@@ -62,6 +71,7 @@ def getRecord(cafes):
                         record_values[recordIndex] = 'not yet'
                         recordIndex+=1					
                 elif extracted_info[infoIndex] == 'photourl' :
+                    print(cafes[cafeIndex].get(extracted_info[infoIndex]))
                     record_values[recordIndex] = cafes[cafeIndex].get(extracted_info[infoIndex])[0]
                     print('record_values[recordIndex] : ', record_values[recordIndex], 'extracted_info : ', extracted_info[infoIndex])
                     recordIndex+=1
@@ -90,10 +100,10 @@ def getRecord(cafes):
         print('finish')
         insertTable()
 
-
-
-
 if __name__ == "__main__":
-    cafe_list = test_list.getResult()
+    #import json and change into python dictionary
+    with open("result2.json", "r") as f:
+        read_data = f.read()
+    cafe_list = json.loads(read_data)
     getRecord(cafe_list)
 
