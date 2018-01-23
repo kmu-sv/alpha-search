@@ -3,7 +3,6 @@
 # input : list organized by python dictionary
 # output : print (insert success or fail)
 
-#import test_list
 import json
 import pymysql
 
