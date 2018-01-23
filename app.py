@@ -59,20 +59,20 @@ def parseEntity(req) :
     parameters = result.get("parameters")
     parameter_atmosphere = parameters.get("atmosphere")
     parameter_facility = parameters.get("facility")
-    # if parameter_atmosphere.get("quiet") != None :
-    #     atmosphere[0] = "quiet"
-    # if parameter_atmosphere.get("casual") != None :
-    #     atmosphere[1] = "casual"
-    # if parameter_atmosphere.get("cosy") != None :
-    #     atmosphere[2] = "cosy"
-    # if parameter_atmosphere.get("romantic") != None :
-    #     atmosphere[3] = "romantic"
-    # if parameter_atmosphere.get("classy") != None :
-    #     atmosphere[4] = "classy"
-    # if parameter_atmosphere.get("trendy") != None :
-    #     atmosphere[5] = "trendy"
-    # if parameter_atmosphere.get("hipster") != None :
-    #     atmosphere[6] = "hipster"
+    if "quiet" in parameter_atmosphere :
+         atmosphere[0] = "quiet"
+    if "casual" in parameter_atmosphere :
+         atmosphere[1] = "casual"
+    if "cosy" in parameter_atmosphere :
+         atmosphere[2] = "cosy"
+    if "romantic" in parameter_atmosphere :
+         atmosphere[3] = "romantic"
+    if "classy" in parameter_atmosphere :
+         atmosphere[4] = "classy"
+    if "trendy" in parameter_atmosphere :
+         atmosphere[5] = "trendy"
+    if "hipster" in parameter_atmosphere :
+         atmosphere[6] = "hipster"
     
     if 'wifi' in parameter_facility :
         wifi = "1"
@@ -126,12 +126,15 @@ def makeWebhookResult(data):
 @app.route('/mappedcafes/<token>/<latitude>/<longitude>', methods = ['POST', 'GET', 'OPTIONS'])
 @Decorator_for_HTTP.crossdomain(origin='*')
 def getCafes(token, latitude, longitude) :
-    # Get data mapped token from redis table 
+    # TODO : remove later
     print("token : ", token)
     print("latitude : ", latitude, "longitude : ", longitude)
+    # Get data mapped token from redis table 
     data = redis_obj.get(token)
+    # TODO : remove later
     print(data)
     query = makeQuery(data)
+    # TODO : remove later
     print(query)
     result = getDatafromDB(query)
     # TODO : filter data based on location
