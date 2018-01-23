@@ -68,7 +68,7 @@ window.onload = function () {
 
         var token = $("#token").val();
 
-        urlAPI = "https://54.241.216.252:5000/mappedcafes/{0}/{1}/{2}"
+        urlAPI = "https://alpha-search.in:5000/mappedcafes/{0}/{1}/{2}"
             .format(
                 token,
                 startPos.coords.latitude,
