@@ -75,13 +75,11 @@ window.onload = function () {
                 startPos.coords.longitude
             );
 
-        tmpUrl = "https://54.241.216.252:5002/mappedcafes/4235c90663f34d6bb90d4e2c8e2bf875";
-
         console.log(urlAPI);
 
         $.ajax(
             {
-                url: tmpUrl,
+                url: urlAPI,
 
                 complete: function () {
                     $('.preloader-background').delay(1700).fadeOut('slow');
