@@ -154,9 +154,9 @@ def getCafes(token) :
     )
     return response
 
-@app.route('/')
-def index() :
-    return render_template("index.html")
+@app.route('/<token>')
+def index(token) :
+    return render_template("index.html", token=token)
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
