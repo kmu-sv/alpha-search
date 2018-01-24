@@ -40,7 +40,7 @@ def filterbyradius(data, latitude, longitude) :
     for cafe in cafe_list :
         if(getDistance(float(latitude), float(longitude), cafe['latitude'], cafe['longitude']) < MAX_RADIUS) :
             filtered_list.append(cafe)
-        if(len(filtered_list) == MAX_RADIUS) : 
+        if(len(filtered_list) == MAX_CAFE_NUM) : 
             break
     print(filtered_list)
     return json.dumps(filtered_list)
