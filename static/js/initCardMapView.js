@@ -75,6 +75,13 @@ window.onload = function () {
                 startPos.coords.longitude
             );
 
+        map.panTo(
+            {
+                lat: startPos.coords.latitude,
+                lng: startPos.coords.longitude
+            }
+        );
+
         console.log(urlAPI);
 
         $.ajax(
@@ -98,10 +105,12 @@ window.onload = function () {
                             }
                         );
 
+                        console.log(place);
+
                         cards.append("" +
                             "<div class='carousel-item' id='" + key.toString() + "'>" +
                             "<div class='card'><div class='card-image'>" +
-                            "<img src='" + place['photourl'][0] + "' height='130px'>" +
+                            "<img src='" + place['photourl'] + "' height='130px'>" +
                             "</div><div class='card-content'><small>" + place['name'] + "\n" + place['address'] +
                             "</small></div></div></div>"
                         );
@@ -119,8 +128,6 @@ window.onload = function () {
                             shift: 10
                         }
                     );
-
-                    map.panTo(places[0]);
 
                     var activeCard = null;
 
