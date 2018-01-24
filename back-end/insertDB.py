@@ -14,6 +14,7 @@ record_values = ['name_value', 'address_value', 'phone_number_value', 'latitude_
 
 extracted_info = ['name', 'address', 'phone', 'latitude', 'longitude', 'rating', 'openinfo', 'photourl', 'attributes', 'website']
 extracted_attributes_info = ['Take-out', 'Parking', 'Bike Parking', 'Good for Groups', 'Ambience', 'Wi-Fi']
+day_info = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 # connect to DB
 def getConnection():
@@ -64,13 +65,30 @@ def getRecord(cafes):
             else :
                 print (cafeIndex,infoIndex)
                 if extracted_info[infoIndex] == 'openinfo' :
-                	# loop for the operating hours for each day of the week
-                    for day in range(7):
-                        openinfo_list = cafes[cafeIndex].get(extracted_info[infoIndex])
-                        record_values[recordIndex] = 'not yet'
-                        recordIndex+=1					
+                    openinfo_list = cafes[cafeIndex].get(extracted_info[infoIndex])
+                    dayIndex = 0
+                    day_countIndex = 0
+                    testIndex = 0
+                    print (openinfo_list[-1].get('day'))
+                    # loop for the operating hours for each day of the week
+                    for day_number in range (len(openinfo_list)):
+                        #compare day_countInex and the day 
+                        day = openinfo_list[day_number].get('day')
+                        if day == day_countIndex :
+                            record_values[recordIndex] = day_info[openinfo_list[day_number].get('day')], openinfo_list[day_number].get('start'), openinfo_list[day_number].get('end')
+                            record_values[recordIndex] = str(record_values[recordIndex])
+                            recordIndex+=1
+                            day_countIndex+=1
+                        else :
+                            while day_countIndex < day :
+                                record_values[recordIndex] ='NULL'
+                                recordIndex+=1
+                                day_countIndex+=1
+                    while day_countIndex < 7 :
+                        record_values[recordIndex] = 'NULL'
+                        day_countIndex += 1
+                        recordIndex += 1	
                 elif extracted_info[infoIndex] == 'photourl' :
-                    print(cafes[cafeIndex].get(extracted_info[infoIndex]))
                     record_values[recordIndex] = cafes[cafeIndex].get(extracted_info[infoIndex])[0]
                     print('record_values[recordIndex] : ', record_values[recordIndex], 'extracted_info : ', extracted_info[infoIndex])
                     recordIndex+=1
@@ -79,20 +97,24 @@ def getRecord(cafes):
                     # loop for storing data for the attribute (for lists in the dictionary)
                     for attributeIndex in range (len(extracted_attributes_info)):
                         if extracted_attributes_info[attributeIndex] in attributes_info :
-                            record_values[recordIndex] = attributes_info.get(extracted_attributes_info[attributeIndex])
-                            if record_values[recordIndex] == 'Yes' or record_values[recordIndex] == 'Street' or record_values[recordIndex] == 'Free':
-                                record_values[recordIndex] = 1
+                            if extracted_attributes_info[attributeIndex] == 'Ambience' :
+                                record_values[recordIndex] = attributes_info.get(extracted_attributes_info[attributeIndex])
+                                recordIndex+=1
                             else :
-                                record_values[recordIndex] = 0
-                            print('record_values[recordIndex] : ', record_values[recordIndex], 'extracted_info : ', extracted_attributes_info[attributeIndex])
-                            recordIndex+=1
+                                record_values[recordIndex] = attributes_info.get(extracted_attributes_info[attributeIndex])
+                                if record_values[recordIndex] == 'Yes' or record_values[recordIndex] == 'Street' or record_values[recordIndex] == 'Free':
+                                    record_values[recordIndex] = 1
+                                else :
+                                    record_values[recordIndex] = 0
+                                print('record_values[recordIndex] : ', record_values[recordIndex], 'extracted_info : ', extracted_attributes_info[attributeIndex])
+                                recordIndex+=1
                         else :
                             record_values[recordIndex] = 0
                             print('record_values[recordIndex] : ', record_values[recordIndex], 'extracted_info : ', extracted_attributes_info[attributeIndex])
                             recordIndex+=1
                 else :
                     record_values[recordIndex] = cafes[cafeIndex].get(extracted_info[infoIndex])
-                    print('record_values[recordIndex] : ', record_values[recordIndex], 'extracted_info : ', extracted_info[infoIndex])
+                    print(recordIndex, ': ', record_values[recordIndex], 'extracted_info : ', extracted_info[infoIndex])
                     recordIndex+=1
                 print ('cafeIndex  is :', cafeIndex, 'infoIndex is : ', infoIndex)
 
