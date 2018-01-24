@@ -68,18 +68,20 @@ window.onload = function () {
 
         var token = $("#token").val();
 
-        urlAPI = "https://alpha-search.in:5000/mappedcafes/{0}/{1}/{2}"
+        urlAPI = "https://54.241.216.252:5000/mappedcafes/{0}/{1}/{2}"
             .format(
                 token,
                 startPos.coords.latitude,
                 startPos.coords.longitude
             );
 
+        tmpUrl = "https://54.241.216.252:5002/mappedcafes/4235c90663f34d6bb90d4e2c8e2bf875";
+
         console.log(urlAPI);
 
         $.ajax(
             {
-                url: urlAPI,
+                url: tmpUrl,
 
                 complete: function () {
                     $('.preloader-background').delay(1700).fadeOut('slow');
