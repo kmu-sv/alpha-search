@@ -12,7 +12,7 @@ String.prototype.format = function () {
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 14
+        zoom: 15
     });
 }
 
@@ -81,6 +81,20 @@ window.onload = function () {
             }
         );
 
+        var marker = new google.maps.Marker({
+            position: map.getCenter(),
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: 'white',
+                fillOpacity: 0.8,
+                strokeColor: 'green',
+                scale: 7,
+                strokeWeight: 5
+            },
+            draggable: true,
+            map: map
+        });
+
         console.log(urlAPI);
 
         $.ajax(
@@ -90,6 +104,7 @@ window.onload = function () {
                 complete: function () {
                     $('.preloader-background').delay(1700).fadeOut('slow');
                     $('.preloader-wrapper').delay(1700).fadeOut();
+                    drop();
                 },
 
                 success: function (data) {
@@ -111,7 +126,6 @@ window.onload = function () {
                             "</small></div></div>"
                         );
                     });
-                    drop();
                 }
             }
         );
