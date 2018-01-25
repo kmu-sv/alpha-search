@@ -32,12 +32,6 @@ function addMarkerWithTimeout(position, timeout, idx) {
         });
 
         (function (marker, place, idx) {
-            google.maps.event.addListener(marker, "click", function (e) {
-                console.log("click marker");
-                map.panTo(new google.maps.LatLng(place['lat'], place['lng']));
-                $('.carousel').carousel('set', idx);
-            });
-
             $('#' + idx.toString() + "").on('click', function (e) {
                 console.log("click card");
                 map.panTo(new google.maps.LatLng(place['lat'], place['lng']));
@@ -62,6 +56,11 @@ if (navigator.geolocation) {
 }
 
 window.onload = function () {
+
+    $('#card-content').slimScroll({
+        height: '100%'
+    });
+
     var startPos;
     var geoSuccess = function (position) {
         startPos = position;
@@ -94,7 +93,7 @@ window.onload = function () {
                 },
 
                 success: function (data) {
-                    var cards = $('.carousel');
+                    var cards = $('.cards');
                     cards.carousel();
 
                     $.each(data, function (key, place) {
@@ -105,39 +104,13 @@ window.onload = function () {
                             }
                         );
 
-                        console.log(place);
-
-                        cards.append("" +
-                            "<div class='carousel-item' id='" + key.toString() + "'>" +
+                        cards.append(
                             "<div class='card'><div class='card-image'>" +
-                            "<img src='" + place['photourl'] + "' height='130px'>" +
+                            "<img src='" + place['photourl'] + "' height='200px' width='auto'>" +
                             "</div><div class='card-content'><small>" + place['name'] + "\n" + place['address'] +
-                            "</small></div></div></div>"
+                            "</small></div></div>"
                         );
-
-                        if (cards.hasClass('initialized')) {
-                            cards.removeClass('initialized')
-                        }
                     });
-
-                    cards.carousel(
-                        {
-                            dist: 0,
-                            fullwidth: true,
-                            padding: 10,
-                            shift: 10
-                        }
-                    );
-
-                    var activeCard = null;
-
-                    setInterval(function (e) {
-                        var currentActiveCard = $('.active');
-                        if (activeCard !== currentActiveCard) {
-                            activeCard = currentActiveCard;
-                            activeCard.trigger("click");
-                        }
-                    }, 500);
                     drop();
                 }
             }
