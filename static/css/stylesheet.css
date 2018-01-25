@@ -19,6 +19,10 @@ html, body {
     margin-bottom: 0;
 }
 
+.card {
+    cursor: pointer;
+}
+
 .preloader-background {
     display: flex;
     align-items: center;
