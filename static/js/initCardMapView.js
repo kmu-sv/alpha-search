@@ -1,5 +1,6 @@
 var places = [];
 var markers = [];
+var currentLocation;
 var map;
 
 String.prototype.format = function () {
@@ -33,8 +34,21 @@ function addMarkerWithTimeout(position, timeout, idx) {
 
         (function (marker, place, idx) {
             $('#' + idx.toString() + "").on('click', function (e) {
+
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setOptions({'opacity': 0.3});
+                }
+
+                marker.setOptions({'opacity': 1});
+
                 console.log("click card");
-                map.panTo(new google.maps.LatLng(place['lat'], place['lng']));
+
+                map.panTo(
+                    new google.maps.LatLng(
+                        (currentLocation['lat'] + place['lat']) / 2,
+                        (currentLocation['lng'] + place['lng']) / 2
+                    )
+                );
             });
         })(newMarker, places[idx], idx);
 
@@ -67,19 +81,19 @@ window.onload = function () {
 
         var token = $("#token").val();
 
+        currentLocation = {
+            lat: startPos.coords.latitude,
+            lng: startPos.coords.longitude
+        };
+
         urlAPI = "https://alpha-search.in:5000/mappedcafes/{0}/{1}/{2}"
             .format(
                 token,
-                startPos.coords.latitude,
-                startPos.coords.longitude
+                currentLocation['lat'],
+                currentLocation['lng']
             );
 
-        map.panTo(
-            {
-                lat: startPos.coords.latitude,
-                lng: startPos.coords.longitude
-            }
-        );
+        map.panTo(currentLocation);
 
         var marker = new google.maps.Marker({
             position: map.getCenter(),
@@ -120,7 +134,7 @@ window.onload = function () {
                         );
 
                         cards.append(
-                            "<div class='card'><div class='card-image'>" +
+                            "<div class='card' id='" + key.toString() + "'><div class='card-image'>" +
                             "<img src='" + place['photourl'] + "' height='200px' width='auto'>" +
                             "</div><div class='card-content'><small>" + place['name'] + "\n" + place['address'] +
                             "</small></div></div>"
