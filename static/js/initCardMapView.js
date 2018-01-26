@@ -150,13 +150,13 @@ window.onload = function () {
                     });
 
                     Materialize.toast('I found a cafe to recommend you!!');
-                    $('.preloader-background').delay(1700).fadeOut('slow');
-                    $('.preloader-wrapper').delay(1700).fadeOut();
                     drop();
 
                     setTimeout(function () {
+                        $('.preloader-background').delay(1700).fadeOut('slow');
+                        $('.preloader-wrapper').delay(1700).fadeOut();
                         Materialize.Toast.removeAll();
-                    }, 1500);
+                    }, 2500);
                 }
             }
         );
