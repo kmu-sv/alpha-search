@@ -138,7 +138,7 @@ window.onload = function () {
                         );
 
                         cards.append(
-                            "<div class='card' id='" + key.toString() + "'><div class='card-image'>" +
+                            "<div class='waves-effect waves-light card' id='" + key.toString() + "'><div class='card-image'>" +
                             "<img src='" + place['photourl'] + "' height='200px' width='auto'>" +
                             "</div><div class='card-content'><small>" + place['name'] + "\n" + place['address'] +
                             "</small></div></div>"
