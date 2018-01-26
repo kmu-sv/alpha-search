@@ -32,28 +32,32 @@ function addMarkerWithTimeout(position, timeout, idx) {
             map: map
         });
 
-        (function (marker, place, idx) {
-            $('#' + idx.toString() + "").on('click', function (e) {
-
-                for (var i = 0; i < markers.length; i++) {
-                    markers[i].setOptions({'opacity': 0.3});
-                }
-
-                marker.setOptions({'opacity': 1});
-
-                console.log("click card");
-
-                map.panTo(
-                    new google.maps.LatLng(
-                        (currentLocation['lat'] + place['lat']) / 2,
-                        (currentLocation['lng'] + place['lng']) / 2
-                    )
-                );
-            });
-        })(newMarker, places[idx], idx);
-
         markers.push(newMarker);
+
+        google.maps.event.addListener(newMarker, "click", function (e) {
+            setCardAndMap(this, places[idx]);
+        });
+        $('#' + idx.toString() + "").on('click', function (e) {
+            setCardAndMap(markers[idx], places[idx]);
+        });
     }, timeout);
+}
+
+function setCardAndMap(marker, place) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setOptions({'opacity': 0.3});
+    }
+
+    marker.setOptions({'opacity': 1});
+
+    console.log("click card");
+
+    map.panTo(
+        new google.maps.LatLng(
+            (currentLocation['lat'] + place['lat']) / 2,
+            (currentLocation['lng'] + place['lng']) / 2
+        )
+    );
 }
 
 function clearMarkers() {
