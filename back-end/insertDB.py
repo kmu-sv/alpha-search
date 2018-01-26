@@ -30,13 +30,13 @@ def insertTable():
     try:
         with conn.cursor() as cursor:
             sql = 'INSERT INTO CAFES (name, address, phone_number, latitude, longitude, rating, monday_open_hours, tuesday_open_hours, \
-            wednesday_open_hours, thursday_open_hours, friday_open_hours, saturday_open_hours, sunday_open_hours, photourl, \
-            take_out_available, parking_available, bike_parking_available, good_for_groups, ambience, wi_fi_available, website) \
-             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+                                        wednesday_open_hours, thursday_open_hours, friday_open_hours, saturday_open_hours, sunday_open_hours, photourl, \
+                                        take_out_available, parking_available, bike_parking_available, good_for_groups, ambience, wi_fi_available, website) \
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
             cursor.execute(sql, (record_values[0], record_values[1], record_values[2], record_values[3], record_values[4], \
-            	record_values[5], record_values[6], record_values[7], record_values[8], record_values[9], record_values[10], \
-            	record_values[11], record_values[12], record_values[13], record_values[14], record_values[15], record_values[16], \
-            	record_values[17], record_values[18], record_values[19], record_values[20]))
+            	            record_values[5], record_values[6], record_values[7], record_values[8], record_values[9], record_values[10], \
+            	            record_values[11], record_values[12], record_values[13], record_values[14], record_values[15], record_values[16], \
+            	            record_values[17], record_values[18], record_values[19], record_values[20]))
             conn.commit()
             print(cursor.lastrowid)
 
