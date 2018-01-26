@@ -7,7 +7,7 @@ Description :
 This script is for back-end service including fulfillment webhook for an Dialogflow agent.
 """
 from __future__ import print_function
-import json, os, uuid, redis
+import json, os, uuid, redis, sys
 from flask import Flask, request, make_response
 
 # Flask app should start in global layout
@@ -95,10 +95,14 @@ def makeWebhookResult(data):
     #base_url = "https://54.241.216.252:5000/"
 
     # Generate token
-    token_generated = str(uuid.uuid4()).replace("-", "")
+    while(True) :
+        token_generated = str(uuid.uuid4()).replace("-", "")
+        if redis_obj.get(token_generated) == None :
+            break
 
     # insert mapping data to redis table
     redis_obj.set(token_generated, json.dumps(data))
+    redis_obj.expire(token_generated, 60)
     speech = base_url + token_generated
     
     return {
@@ -106,9 +110,7 @@ def makeWebhookResult(data):
         "displayText": speech
     }
 
-if __name__ == '__main__':
+def run() :
     port = int(os.getenv('PORT', 5002))
-
     print("Starting Webhook Server on port %d" % port)
-
     app.run(debug=False, port=port, host='0.0.0.0')

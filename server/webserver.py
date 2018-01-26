@@ -32,10 +32,9 @@ def getDatafromDB(query) :
     data = curs.fetchall()
     return json.dumps(data)
 
-def filterbyradius(data, latitude, longitude) :
+def filterbyradius(cafe_list, latitude, longitude) :
     MAX_CAFE_NUM = 10
     MAX_RADIUS = 1000
-    cafe_list = json.loads(data)
     filtered_list = []
     for cafe in cafe_list :
         if(getDistance(float(latitude), float(longitude), cafe['latitude'], cafe['longitude']) < MAX_RADIUS) :
@@ -75,8 +74,9 @@ def getCafes(token, latitude, longitude) :
     query = makeQuery(entities)
     # Request to query the DB
     data = getDatafromDB(query)
+    cafe_list = json.loads(data)
     # filter cafes by radius
-    result = filterbyradius(data, latitude, longitude)
+    result = filterbyradius(cafe_list, latitude, longitude)
     
     response = app.response_class(
         response=result,
@@ -90,9 +90,9 @@ def getCafes(token, latitude, longitude) :
 def index(token) :
     return render_template("index.html", token=token)
 
-if __name__ == '__main__':
+def run() :
     port = int(os.getenv('PORT', 5000))
-
     print("Starting Web Server on port %d" % port)
-
     app.run(debug=False, port=port, host='0.0.0.0', ssl_context=('cert.pem', 'key.pem'))
+
+    
