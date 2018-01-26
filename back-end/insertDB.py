@@ -75,7 +75,7 @@ def getRecord(cafes):
                         #compare day_countInex and the day 
                         day = openinfo_list[day_number].get('day')
                         if day == day_countIndex :
-                            record_values[recordIndex] = day_info[openinfo_list[day_number].get('day')], openinfo_list[day_number].get('start'), openinfo_list[day_number].get('end')
+                            record_values[recordIndex] = openinfo_list[day_number].get('day'), openinfo_list[day_number].get('start'), openinfo_list[day_number].get('end')
                             record_values[recordIndex] = str(record_values[recordIndex])
                             recordIndex+=1
                             day_countIndex+=1
