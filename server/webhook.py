@@ -102,7 +102,7 @@ def makeWebhookResult(data):
 
     # insert mapping data to redis table
     redis_obj.set(token_generated, json.dumps(data))
-    redis_obj.expire(token_generated, 60)
+    #redis_obj.expire(token_generated, 60)
     speech = base_url + token_generated
     
     return {
