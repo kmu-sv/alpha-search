@@ -141,11 +141,27 @@ window.onload = function () {
                             }
                         );
 
+                        console.log(place);
+
+                        var icon = "";
+
+                        if (place['wi_fi_available']) {
+                            icon += "<i class='material-icons'>wifi</i>";
+                        } else if (place['parking_available']) {
+                            icon += "<i class='material-icons'>local_parking</i>";
+                        }
+
                         cards.append(
-                            "<div class='waves-effect waves-light card' id='" + key.toString() + "'><div class='card-image'>" +
-                            "<img src='" + place['photourl'] + "' height='200px' width='auto'>" +
-                            "</div><div class='card-content'><small>" + place['name'] + "\n" + place['address'] +
-                            "</small></div></div>"
+                            "<div class='waves-effect waves-light card' id='" + key.toString() + "'>" +
+                                "<div class='card-image'>" +
+                                    "<img src='" + place['photourl'] + "' height='200px' width='auto'>" +
+                                "</div>" +
+                                "<div class='card-content'>" +
+                                    "<p style='float: right'>" + icon + "</p>"+
+                                    "<span class='card-title grey-text text-darken-4'>" + place['name'] + "</span>" +
+                                    "<p>" + place['address'] + "</p>" +
+                                "</div>" +
+                            "</div>"
                         );
                     });
 
