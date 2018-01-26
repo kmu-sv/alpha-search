@@ -75,6 +75,9 @@ if (navigator.geolocation) {
 
 window.onload = function () {
 
+    Materialize.toast('Hello!! My name is Alpha Search!');
+    Materialize.toast("I'm looking for a cafe to recommend you...");
+
     $('#card-content').slimScroll({
         height: '100%'
     });
@@ -119,10 +122,11 @@ window.onload = function () {
             {
                 url: urlAPI,
 
-                complete: function () {
-                    $('.preloader-background').delay(1700).fadeOut('slow');
-                    $('.preloader-wrapper').delay(1700).fadeOut();
-                    drop();
+                error: function () {
+                    Materialize.toast("Aah! Failed! I'll look again. :(");
+                    setTimeout(function () {
+                        location.reload();
+                    }, 3500)
                 },
 
                 success: function (data) {
@@ -144,6 +148,15 @@ window.onload = function () {
                             "</small></div></div>"
                         );
                     });
+
+                    Materialize.toast('I found a cafe to recommend you!!');
+                    $('.preloader-background').delay(1700).fadeOut('slow');
+                    $('.preloader-wrapper').delay(1700).fadeOut();
+                    drop();
+
+                    setTimeout(function () {
+                        Materialize.Toast.removeAll();
+                    }, 1500);
                 }
             }
         );
