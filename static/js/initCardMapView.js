@@ -147,7 +147,9 @@ window.onload = function () {
 
                         if (place['wi_fi_available']) {
                             icon += "<i class='material-icons'>wifi</i>";
-                        } else if (place['parking_available']) {
+                        }
+
+                        if (place['parking_available']) {
                             icon += "<i class='material-icons'>local_parking</i>";
                         }
 
