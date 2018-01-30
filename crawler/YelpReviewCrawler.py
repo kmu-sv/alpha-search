@@ -37,5 +37,5 @@ for row in data :
         except Exception as ex : 
             print(ex)
             break
-    i = i + 1
+        i = i + 1
     # TODO : Insert review to DB
