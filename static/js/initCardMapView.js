@@ -191,7 +191,7 @@ window.onload = function () {
                         cards.append(
                             "<div class='waves-effect waves-light card' id='" + key.toString() + "'>" +
                             "<div class='card-image'>" +
-                            "<img src='" + place['photourl'] + "' height='200px' width='auto'>" +
+                            "<img src='" + place['photourl'] + "' height='220px' width='auto'>" +
                             "</div>" +
                             "<div class='card-content'>" +
                             "<p style='float: right'>" + icon + "</p>" +
