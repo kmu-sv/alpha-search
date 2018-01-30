@@ -76,6 +76,18 @@ function controlDisplay(idx) {
         place['name']
     );
 
+    var detailParagraph = $("#detail-p");
+    detailParagraph.empty();
+    detailParagraph.append(
+        "<p>" + place["address"] + "</p>"
+    );
+
+    // for (var info in place) {
+    //     detailContent.append(
+    //         "<p>" + info + " : " + place[info] + "</p>"
+    //     );
+    // }
+
     var cards = $(".cards");
     var detailInfo = $(".detail-info");
 
