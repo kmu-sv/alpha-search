@@ -16,11 +16,15 @@ except ImportError:
 sql_conn = pymysql.connect(host='localhost', user='gaeul', password='alpha', db='CAFE', charset='utf8mb4')
 curs = sql_conn.cursor(pymysql.cursors.DictCursor)
 
-query = "select * from CAFES"
-curs.execute(query)
+fetch_query = "select * from CAFES"
+curs.execute(fetch_query)
 data = curs.fetchall()
+
+insert_query = "INSERT INTO REVIEWS_LIST ('index', 'reviews') VALUES (%s, %s)"
+
 for row in data :
     i = 0
+    review_list = list()
     while True : 
         crawling_url = row['yelpurl'] 
         soup = BeautifulSoup(crawling_url, "lxml")
@@ -31,11 +35,14 @@ for row in data :
             # parsing reviews
             reviews = soup.select('p[lang|=en]')
             for review in reviews :
+                review = review.replace("<p lang=\"en\">", "")
+                review_content = review.replace("</p", "")
                 # TODO : Remove later
-                print(review)
+                print(review_content)
                 print('=============================================================================================')
+                review_list.append(review_content)
         except Exception as ex : 
             print(ex)
             break
         i = i + 1
-    # TODO : Insert review to DB
+    curs.execute(insert_query, row['index'], "#tag#".join(review_list))
