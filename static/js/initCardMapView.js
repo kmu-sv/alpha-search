@@ -2,6 +2,7 @@ var places = [];
 var markers = [];
 var currentLocation;
 var map;
+var ajaxData = [];
 
 String.prototype.format = function () {
     string = this;
@@ -35,18 +36,20 @@ function addMarkerWithTimeout(position, timeout, idx) {
         markers.push(newMarker);
 
         google.maps.event.addListener(newMarker, "click", function (e) {
-            setCardAndMap(this, places[idx]);
+            setCardAndMap(this, places[idx], idx);
         });
         $('#' + idx.toString() + "").on('click', function (e) {
-            setCardAndMap(markers[idx], places[idx]);
+            setCardAndMap(markers[idx], places[idx], idx);
         });
     }, timeout);
 }
 
-function setCardAndMap(marker, place) {
+function setCardAndMap(marker, place, idx) {
     for (var i = 0; i < markers.length; i++) {
         markers[i].setOptions({'opacity': 0.3});
     }
+
+    controlDisplay(idx);
 
     marker.setOptions({'opacity': 1});
 
@@ -58,6 +61,31 @@ function setCardAndMap(marker, place) {
             (currentLocation['lng'] + place['lng']) / 2
         )
     );
+}
+
+function controlDisplay(idx) {
+
+    var place = ajaxData[idx];
+
+    $("#detail-image").attr(
+        "src",
+        place['photourl']
+    );
+
+    $("#detail-title").text(
+        place['name']
+    );
+
+    var cards = $(".cards");
+    var detailInfo = $(".detail-info");
+
+    if (cards.css("display") == "none") {
+        cards.show();
+        detailInfo.hide();
+    } else {
+        cards.hide();
+        detailInfo.show();
+    }
 }
 
 function clearMarkers() {
@@ -130,6 +158,9 @@ window.onload = function () {
                 },
 
                 success: function (data) {
+
+                    ajaxData = data;
+
                     var cards = $('.cards');
                     cards.carousel();
 
@@ -155,14 +186,14 @@ window.onload = function () {
 
                         cards.append(
                             "<div class='waves-effect waves-light card' id='" + key.toString() + "'>" +
-                                "<div class='card-image'>" +
-                                    "<img src='" + place['photourl'] + "' height='200px' width='auto'>" +
-                                "</div>" +
-                                "<div class='card-content'>" +
-                                    "<p style='float: right'>" + icon + "</p>"+
-                                    "<span class='card-title grey-text text-darken-4'>" + place['name'] + "</span>" +
-                                    "<p>" + place['address'] + "</p>" +
-                                "</div>" +
+                            "<div class='card-image'>" +
+                            "<img src='" + place['photourl'] + "' height='200px' width='auto'>" +
+                            "</div>" +
+                            "<div class='card-content'>" +
+                            "<p style='float: right'>" + icon + "</p>" +
+                            "<span class='card-title grey-text text-darken-4'>" + place['name'] + "</span>" +
+                            "<p>" + place['address'] + "</p>" +
+                            "</div>" +
                             "</div>"
                         );
                     });
