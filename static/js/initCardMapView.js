@@ -82,12 +82,6 @@ function controlDisplay(idx) {
         "<p>" + place["address"] + "</p>"
     );
 
-    // for (var info in place) {
-    //     detailContent.append(
-    //         "<p>" + info + " : " + place[info] + "</p>"
-    //     );
-    // }
-
     var cards = $(".cards");
     var detailInfo = $(".detail-info");
 
