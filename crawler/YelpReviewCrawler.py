@@ -18,11 +18,11 @@ curs = sql_conn.cursor(pymysql.cursors.DictCursor)
 
 fetch_query = "select * from CAFES"
 curs.execute(fetch_query)
-data = curs.fetchall()
+cafes = curs.fetchall()
 
 insert_query = "INSERT INTO REVIEWS_LIST ('index', 'reviews') VALUES (%s, %s)"
 
-for row in data :
+for row in cafes :
     i = 0
     review_list = list()
     while True : 
