@@ -186,15 +186,7 @@ window.onload = function () {
 
                         console.log(place);
 
-                        var icon = "";
-
-                        if (place['wi_fi_available']) {
-                            icon += "<i class='material-icons'>wifi</i>";
-                        }
-
-                        if (place['parking_available']) {
-                            icon += "<i class='material-icons'>local_parking</i>";
-                        }
+                        var icon = setIcon(place);
 
                         cards.append(
                             "<div class='waves-effect waves-light card' id='" + key.toString() + "'>" +
@@ -224,3 +216,18 @@ window.onload = function () {
     };
     navigator.geolocation.getCurrentPosition(geoSuccess);
 };
+
+function setIcon(place) {
+
+    var icon = "";
+
+    if (place['wi_fi_available']) {
+        icon += "<i class='material-icons'>wifi</i>";
+    }
+
+    if (place['parking_available']) {
+        icon += "<i class='material-icons'>local_parking</i>";
+    }
+
+    return icon;
+}
