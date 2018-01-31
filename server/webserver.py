@@ -12,6 +12,7 @@ import numpy as np
 from flask import Flask, request, make_response, render_template
 # import custom modules
 import Decorator_for_HTTP
+from OpenCafeFinder import findOpenCafes
 
 # Flask app should start in global layout
 app = Flask(__name__)
@@ -75,8 +76,9 @@ def getCafes(token, latitude, longitude) :
     # Request to query the DB
     data = getDatafromDB(query)
     cafe_list = json.loads(data)
+    open_cafe_list = findOpenCafes(cafe_list)
     # filter cafes by radius
-    result = filterbyradius(cafe_list, latitude, longitude)
+    result = filterbyradius(open_cafe_list, latitude, longitude)
     
     response = app.response_class(
         response=result,
