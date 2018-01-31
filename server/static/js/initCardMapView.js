@@ -1,6 +1,8 @@
 var places = [];
 var markers = [];
+var currentLocation;
 var map;
+var ajaxData = [];
 
 String.prototype.format = function () {
     string = this;
@@ -12,7 +14,7 @@ String.prototype.format = function () {
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 14
+        zoom: 15
     });
 }
 
@@ -31,21 +33,65 @@ function addMarkerWithTimeout(position, timeout, idx) {
             map: map
         });
 
-        (function (marker, place, idx) {
-            google.maps.event.addListener(marker, "click", function (e) {
-                console.log("click marker");
-                map.panTo(new google.maps.LatLng(place['lat'], place['lng']));
-                $('.carousel').carousel('set', idx);
-            });
-
-            $('#' + idx.toString() + "").on('click', function (e) {
-                console.log("click card");
-                map.panTo(new google.maps.LatLng(place['lat'], place['lng']));
-            });
-        })(newMarker, places[idx], idx);
-
         markers.push(newMarker);
+
+        google.maps.event.addListener(newMarker, "click", function (e) {
+            setCardAndMap(this, places[idx], idx);
+        });
+        $('#' + idx.toString() + "").on('click', function (e) {
+            setCardAndMap(markers[idx], places[idx], idx);
+        });
     }, timeout);
+}
+
+function setCardAndMap(marker, place, idx) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setOptions({'opacity': 0.3});
+    }
+
+    controlDisplay(idx);
+
+    marker.setOptions({'opacity': 1});
+
+    console.log("click card");
+
+    map.panTo(
+        new google.maps.LatLng(
+            (currentLocation['lat'] + place['lat']) / 2,
+            (currentLocation['lng'] + place['lng']) / 2
+        )
+    );
+}
+
+function controlDisplay(idx) {
+
+    var place = ajaxData[idx];
+
+    $("#detail-image").attr(
+        "src",
+        place['photourl']
+    );
+
+    $("#detail-title").text(
+        place['name']
+    );
+
+    var detailParagraph = $("#detail-p");
+    detailParagraph.empty();
+    detailParagraph.append(
+        "<p>" + place["address"] + "</p>"
+    );
+
+    var cards = $(".cards");
+    var detailInfo = $(".detail-info");
+
+    if (cards.css("display") == "none") {
+        cards.show();
+        detailInfo.hide();
+    } else {
+        cards.hide();
+        detailInfo.show();
+    }
 }
 
 function clearMarkers() {
@@ -62,25 +108,47 @@ if (navigator.geolocation) {
 }
 
 window.onload = function () {
+
+    Materialize.toast('Hello!! My name is Alpha Search!');
+    Materialize.toast("I'm looking for a cafe to recommend you...");
+
+    $('#card-content').slimScroll({
+        height: '100%'
+    });
+
     var startPos;
     var geoSuccess = function (position) {
         startPos = position;
 
         var token = $("#token").val();
 
+        currentLocation = {
+            lat: startPos.coords.latitude,
+            lng: startPos.coords.longitude
+        };
+
         urlAPI = "https://alpha-search.in:5000/mappedcafes/{0}/{1}/{2}"
             .format(
                 token,
-                startPos.coords.latitude,
-                startPos.coords.longitude
+                currentLocation['lat'],
+                currentLocation['lng']
             );
 
-        map.panTo(
-            {
-                lat: startPos.coords.latitude,
-                lng: startPos.coords.longitude
-            }
-        );
+        map.panTo(currentLocation);
+
+        var marker = new google.maps.Marker({
+            position: map.getCenter(),
+            icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: 'white',
+                fillOpacity: 0.8,
+                strokeColor: 'green',
+                scale: 7,
+                strokeWeight: 5
+            },
+            draggable: true,
+            map: map
+        });
 
         console.log(urlAPI);
 
@@ -88,13 +156,18 @@ window.onload = function () {
             {
                 url: urlAPI,
 
-                complete: function () {
-                    $('.preloader-background').delay(1700).fadeOut('slow');
-                    $('.preloader-wrapper').delay(1700).fadeOut();
+                error: function () {
+                    Materialize.toast("Aah! Failed! I'll look again. :(");
+                    setTimeout(function () {
+                        location.reload();
+                    }, 3500)
                 },
 
                 success: function (data) {
-                    var cards = $('.carousel');
+
+                    ajaxData = data;
+
+                    var cards = $('.cards');
                     cards.carousel();
 
                     $.each(data, function (key, place) {
@@ -107,41 +180,48 @@ window.onload = function () {
 
                         console.log(place);
 
-                        cards.append("" +
-                            "<div class='carousel-item' id='" + key.toString() + "'>" +
-                            "<div class='card'><div class='card-image'>" +
-                            "<img src='" + place['photourl'] + "' height='130px'>" +
-                            "</div><div class='card-content'><small>" + place['name'] + "\n" + place['address'] +
-                            "</small></div></div></div>"
-                        );
+                        var icon = setIcon(place);
 
-                        if (cards.hasClass('initialized')) {
-                            cards.removeClass('initialized')
-                        }
+                        cards.append(
+                            "<div class='waves-effect waves-light card' id='" + key.toString() + "'>" +
+                            "<div class='card-image'>" +
+                            "<img src='" + place['photourl'] + "' height='220px' width='auto'>" +
+                            "</div>" +
+                            "<div class='card-content'>" +
+                            "<p style='float: right'>" + icon + "</p>" +
+                            "<span class='card-title grey-text text-darken-4'>" + place['name'] + "</span>" +
+                            "<p>" + place['address'] + "</p>" +
+                            "</div>" +
+                            "</div>"
+                        );
                     });
 
-                    cards.carousel(
-                        {
-                            dist: 0,
-                            fullwidth: true,
-                            padding: 10,
-                            shift: 10
-                        }
-                    );
-
-                    var activeCard = null;
-
-                    setInterval(function (e) {
-                        var currentActiveCard = $('.active');
-                        if (activeCard !== currentActiveCard) {
-                            activeCard = currentActiveCard;
-                            activeCard.trigger("click");
-                        }
-                    }, 500);
+                    Materialize.toast('I found a cafe to recommend you!!');
                     drop();
+
+                    setTimeout(function () {
+                        $('.preloader-background').delay(1700).fadeOut('slow');
+                        $('.preloader-wrapper').delay(1700).fadeOut();
+                        Materialize.Toast.removeAll();
+                    }, 2500);
                 }
             }
         );
     };
     navigator.geolocation.getCurrentPosition(geoSuccess);
 };
+
+function setIcon(place) {
+
+    var icon = "";
+
+    if (place['wi_fi_available']) {
+        icon += "<i class='material-icons'>wifi</i>";
+    }
+
+    if (place['parking_available']) {
+        icon += "<i class='material-icons'>local_parking</i>";
+    }
+
+    return icon;
+}
