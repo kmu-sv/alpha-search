@@ -30,8 +30,29 @@
     </div>
 </div>
 
-<div id="map"></div>
-<div class="carousel">
+<div class="row full-height">
+    <div id="map" class="col s10">
+    </div>
+
+    <!-- detail info -->
+    <div class="col s2 detail-info" style="display: none">
+        <div class="card info z-depth-0">
+            <div class="card-image">
+                <img id="detail-image" src="" height='220px' width='auto'>
+                <a class="btn-floating halfway-fab waves-effect waves-light red" onclick="controlDisplay(1)"><i
+                        class="material-icons">close</i></a>
+            </div>
+            <div id="detail-content" class="card-content">
+                <span id="detail-title" class="card-title">Card Title</span>
+                <div id="detail-p">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- cards -->
+    <div class="col s2 cards" id="card-content"></div>
+
 </div>
 
 <input type="hidden" value="{{ token }}" id="token">
@@ -44,6 +65,7 @@
 
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.slimscroll.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/initCardMapView.js') }}"></script>
 </body>
 </html>
