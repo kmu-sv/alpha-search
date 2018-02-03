@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Alpha Search</title>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}"
+          media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css') }}"
+          media="screen,projection"/>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+
+<div class="preloader-background">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+                <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+                <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+                <div class="circle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row full-height">
+    <div id="map" class="col s10">
+    </div>
+
+    <!-- detail info -->
+    <div class="col s2 detail-info" style="display: none">
+        <div class="card info z-depth-0">
+            <div class="card-image">
+                <img id="detail-image" src="" height='220px' width='auto'>
+                <a class="btn-floating halfway-fab waves-effect waves-light red" onclick="controlDisplay(1)"><i
+                        class="material-icons">close</i></a>
+            </div>
+            <div id="detail-content" class="card-content">
+                <span id="detail-title" class="card-title">Card Title</span>
+                <div id="detail-p">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- cards -->
+    <div class="col s2 cards" id="card-content"></div>
+
+</div>
+
+<input type="hidden" value="{{ token }}" id="token">
+
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVmmNbiUWw6JQhe9XfsEgrmyAQ6XeW0tM&callback=initMap">
+</script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.slimscroll.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/initCardMapView.js') }}"></script>
+</body>
+</html>
