@@ -30,7 +30,7 @@ def makeQuery(entities):
 def getDatafromDB(query) :
     curs.execute(query)
     data = curs.fetchall()
-    return json.dumps(data)
+    return data
 
 def filterbyradius(cafe_list, latitude, longitude) :
     MAX_CAFE_NUM = 10
@@ -41,8 +41,7 @@ def filterbyradius(cafe_list, latitude, longitude) :
             filtered_list.append(cafe)
         if(len(filtered_list) == MAX_CAFE_NUM) : 
             break
-    print(filtered_list)
-    return json.dumps(filtered_list)
+    return filtered_list
     
 def getDistance(lat1, lon1, lat2, lon2) :
     theta = lon1 - lon2
@@ -73,13 +72,12 @@ def getCafes(token, latitude, longitude) :
     # Generate a query
     query = makeQuery(entities)
     # Request to query the DB
-    data = getDatafromDB(query)
-    cafe_list = json.loads(data)
-    # filter cafes by radius
-    result = filterbyradius(cafe_list, latitude, longitude)
+    cafe_list = getDatafromDB(query)
+    open_cafe_list = findOpenCafes(filterbyradius(cafe_list, latitude, longitude))
     
     response = app.response_class(
-        response=result,
+        #response=result,
+        response=json.dumps(open_cafe_list),
         status=200,
         mimetype='application/json'
     )
@@ -91,6 +89,11 @@ def index(token) :
     return render_template("index.html", token=token)
 
 def run() :
+    port = int(os.getenv('PORT', 5000))
+    print("Starting Web Server on port %d" % port)
+    app.run(debug=False, port=port, host='0.0.0.0', ssl_context=('cert.pem', 'key.pem'))
+
+if __name__ == '__main__' :
     port = int(os.getenv('PORT', 5000))
     print("Starting Web Server on port %d" % port)
     app.run(debug=False, port=port, host='0.0.0.0', ssl_context=('cert.pem', 'key.pem'))
