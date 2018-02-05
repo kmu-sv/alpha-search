@@ -20,8 +20,6 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14
     });
-
-    directionsDisplay.setMap(map);
 }
 
 function drop() {
@@ -42,22 +40,25 @@ function addMarkerWithTimeout(position, timeout, idx) {
         markers.push(newMarker);
 
         google.maps.event.addListener(newMarker, "click", function (e) {
-            setCardAndMap(this, places[idx], idx, directionsService, directionsDisplay);
+            setCardAndMap(this, places[idx], idx);
         });
         $('#' + idx.toString() + "").on('click', function (e) {
-            setCardAndMap(markers[idx], places[idx], idx, directionsService, directionsDisplay);
+            setCardAndMap(markers[idx], places[idx], idx);
         });
     }, timeout);
 }
 
-function setCardAndMap(marker, place, idx, directionsService, directionsDisplay) {
+function setCardAndMap(marker, place, idx) {
+
+    directionsDisplay.setMap(map);
 
     directionsService.route({
         origin: {lat: currentLocation['lat'], lng: currentLocation['lng']},
         destination: {lat: ajaxData[idx]['latitude'], lng: ajaxData[idx]['longitude']},
         travelMode: 'WALKING'
     }, function (response, status) {
-        console.log(response)
+        console.log(response);
+        aaaa = response;
         if (status === 'OK') {
             directionsDisplay.setDirections(response);
         } else {
@@ -104,6 +105,7 @@ function controlDisplay(idx) {
     };
 
     if (cards.css("display") == "none") {
+        directionsDisplay.setMap(null);
         opacityMarker(1);
         map.setZoom(14);
         map.panTo(
