@@ -7,25 +7,34 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
-.carousel {
-    bottom: 0;
+.full-height {
+    height: 100%;
+    min-height: 100% !important;
+}
+
+.row .col {
+    padding: 0;
+}
+
+.row {
+    margin-bottom: 0;
+}
+
+.card {
+    z-index: 1;
     cursor: pointer;
-    display: block;
-    height: 40vh;
-    position: absolute;
-    width: 100%;
+    margin: 0;
 }
 
-@media (min-width: 600px) {
-    .carousel {
-        height: 35vh;
-    }
-}
+.card:hover {
+    z-index: 3;
 
-.carousel .carousel-item {
-    opacity: 1 !important;
+    -webkit-box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.9);
+    -moz-box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 1px 20px rgba(0, 0, 0, 0.9);
 }
 
 .preloader-background {

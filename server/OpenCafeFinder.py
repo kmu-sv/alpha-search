@@ -32,8 +32,6 @@ def getDate() :
     now_day = datetime.today().weekday()
     utc_now = pytz.utc.localize(datetime.utcnow())
     now = utc_now.astimezone(pytz.timezone("America/Los_Angeles"))
-    #now = datetime.now()
-    #now = localtz.localize(now)
     now_hour = now.hour
     now_minute = now.minute
     return now_day, now_hour, now_minute #return type is tuple 

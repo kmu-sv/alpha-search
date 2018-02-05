@@ -33,9 +33,9 @@ SEARCH_PATH = '/v3/businesses/search'
 BUSINESS_PATH = '/v3/businesses/'  # Business ID will come after slash.
 
 # Defaults for our simple example.
-DEFAULT_TERM = 'cafes'
-LATITUDE = 37.778281
-LONGITUDE = -122.411865
+DEFAULT_TERM = 'cafe'
+#LATITUDE = 37.778281
+#LONGITUDE = -122.411865
 OPEN_NOW = 'false'
 SEARCH_LIMIT = 50
 DEFAULT_LOCATION = 'San Francisco, CA'
@@ -75,7 +75,7 @@ def search(api_key, term, location, offset):
         'location': location.replace(' ', '+'),
         #'latitude': latitude,
         #'longitude': longitude,
-        'open_now': OPEN_NOW.replace(' ', '+'),
+        #'open_now': OPEN_NOW.replace(' ', '+'),
         'limit': SEARCH_LIMIT,
         'offset': offset
     }
@@ -95,7 +95,7 @@ def get_business(api_key, business_id):
 
 # Define default place : wework civic, default wifi='free', default parking='street'
 # def getYelpData(lat=37.778264, longi=-122.411843, wifi="Free", parking="Street"):
-def getYelpData(wifi="Free", parking="Street"):
+def getYelpData():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-s', '--term', dest='term', default=DEFAULT_TERM,
@@ -114,9 +114,10 @@ def getYelpData(wifi="Free", parking="Street"):
     for i in range(17):
         try:
             #response = search(API_KEY, input_values.term, lat, longi, search_limit*i)
-            response = search(API_KEY, input_values.term, input_values.location, 1 + (search_limit * i))
+            response = search(API_KEY, input_values.term, input_values.location, 0 + (search_limit * i))
             businesses = response.get('businesses')
             businessList = []
+
             for idx in businesses:
                 response = get_business(API_KEY, idx['id'])
                 businessList.append(response)
@@ -148,12 +149,14 @@ def getYelpData(wifi="Free", parking="Street"):
             if(item.get('rating')):
                 data['rating'] = item['rating']
 
+            data['yelpurl'] = item['url']
+
             if(item.get('hours')):
                 opendata_list = []
                 for openitem in item['hours']:
                     for openitem_detail in openitem['open']:
                         opendata = dict()
-                        if(openitem_detail.get('day')):
+                        if(openitem_detail.get('day')>=0 and openitem_detail.get('day')<=6):
                             opendata['day'] = openitem_detail['day']
                         if(openitem_detail.get('start')):
                             opendata['start'] = openitem_detail['start']
@@ -192,12 +195,11 @@ def getYelpData(wifi="Free", parking="Street"):
                         attr_content = dataidx.string.strip()
                 moreinfo_data[attr_name] = attr_content
             data['attributes'] = moreinfo_data
-            if data['attributes'].get('Wi-Fi') == wifi and data['attributes'].get('Parking'):
-                datalist.append(data)
+            datalist.append(data)
         total_data_list = total_data_list + datalist
 
     return json.dumps(total_data_list, indent=4)
 
 
 if __name__ == '__main__':
-    getYelpData()
+    print(getYelpData())

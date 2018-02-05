@@ -34,8 +34,8 @@ def getDatafromDB(query) :
     return data
 
 def filterbyradius(cafe_list, latitude, longitude) :
-    MAX_CAFE_NUM = 10
-    MAX_RADIUS = 1000
+    MAX_CAFE_NUM = 20
+    MAX_RADIUS = 3000
     filtered_list = []
     for cafe in cafe_list :
         if(getDistance(float(latitude), float(longitude), cafe['latitude'], cafe['longitude']) < MAX_RADIUS) :
