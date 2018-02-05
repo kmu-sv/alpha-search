@@ -1,8 +1,9 @@
-var places = [];
-var markers = [];
-var currentLocation;
-var map;
 var ajaxData = [];
+var currentLocation;
+var directionsService, directionsDisplay;
+var markers = [];
+var map;
+var places = [];
 
 String.prototype.format = function () {
     string = this;
@@ -13,8 +14,11 @@ String.prototype.format = function () {
 };
 
 function initMap() {
+    directionsService = new google.maps.DirectionsService;
+    directionsDisplay = new google.maps.DirectionsRenderer;
+
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 15
+        zoom: 14
     });
 }
 
@@ -45,15 +49,22 @@ function addMarkerWithTimeout(position, timeout, idx) {
 }
 
 function setCardAndMap(marker, place, idx) {
-    for (var i = 0; i < markers.length; i++) {
-        markers[i].setOptions({'opacity': 0.3});
-    }
+
+    directionsDisplay.setMap(map);
+
+    directionsService.route({
+        origin: {lat: currentLocation['lat'], lng: currentLocation['lng']},
+        destination: {lat: ajaxData[idx]['latitude'], lng: ajaxData[idx]['longitude']},
+        travelMode: 'WALKING'
+    }, function (response, status) {
+        if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+        } else {
+            window.alert('Directions request failed due to ' + status);
+        }
+    });
 
     controlDisplay(idx);
-
-    marker.setOptions({'opacity': 1});
-
-    console.log("click card");
 
     map.panTo(
         new google.maps.LatLng(
@@ -85,10 +96,26 @@ function controlDisplay(idx) {
     var cards = $(".cards");
     var detailInfo = $(".detail-info");
 
+    var opacityMarker = function (opacity) {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setOptions({'opacity': opacity});
+        }
+    };
+
     if (cards.css("display") == "none") {
+        directionsDisplay.setMap(null);
+        opacityMarker(1);
+        map.setZoom(14);
+        map.panTo(
+            new google.maps.LatLng(
+                currentLocation['lat'],
+                currentLocation['lng']
+            )
+        );
         cards.show();
         detailInfo.hide();
     } else {
+        opacityMarker(0);
         cards.hide();
         detailInfo.show();
     }
@@ -99,12 +126,6 @@ function clearMarkers() {
         markers[i].setMap(null);
     }
     markers = [];
-}
-
-if (navigator.geolocation) {
-    console.log('Geolocation is supported!');
-} else {
-    console.log('Geolocation is not supported for this Browser/OS.');
 }
 
 window.onload = function () {
@@ -150,8 +171,6 @@ window.onload = function () {
             map: map
         });
 
-        console.log(urlAPI);
-
         $.ajax(
             {
                 url: urlAPI,
@@ -177,8 +196,6 @@ window.onload = function () {
                                 lng: place['longitude']
                             }
                         );
-
-                        console.log(place);
 
                         var icon = setIcon(place);
 
