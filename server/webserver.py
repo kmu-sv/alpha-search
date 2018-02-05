@@ -12,6 +12,7 @@ import numpy as np
 from flask import Flask, request, make_response, render_template
 # import custom modules
 import Decorator_for_HTTP
+from OpenCafeFinder import findOpenCafes
 
 # Flask app should start in global layout
 app = Flask(__name__)
