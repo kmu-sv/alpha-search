@@ -1,9 +1,9 @@
-var places = [];
-var markers = [];
-var currentLocation;
-var map;
 var ajaxData = [];
+var currentLocation;
 var directionsService, directionsDisplay;
+var markers = [];
+var map;
+var places = [];
 
 String.prototype.format = function () {
     string = this;
@@ -57,8 +57,6 @@ function setCardAndMap(marker, place, idx) {
         destination: {lat: ajaxData[idx]['latitude'], lng: ajaxData[idx]['longitude']},
         travelMode: 'WALKING'
     }, function (response, status) {
-        console.log(response);
-        aaaa = response;
         if (status === 'OK') {
             directionsDisplay.setDirections(response);
         } else {
