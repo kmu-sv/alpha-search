@@ -7,7 +7,6 @@ import json
 import pymysql
 from datetime import datetime
 import pytz
-open_cafe_list = []
 
 # connect to DB
 def getConnection():
@@ -41,6 +40,7 @@ def getDate() :
 
 # find out opening cafe
 def findOpenCafes(cafes):
+    open_cafe_list = []
     now_day, now_hour, now_minute = getDate()
     weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
     day_to_find = weekdays[now_day]
