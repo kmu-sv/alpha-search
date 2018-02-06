@@ -91,7 +91,7 @@ def parseEntity(req) :
     return data
 
 def makeWebhookResult(data):
-    base_url = "https://alpha-search.in:5000/"
+    base_url = "http://alpha-search.in/"
     #base_url = "https://54.241.216.252:5000/"
 
     # Generate token

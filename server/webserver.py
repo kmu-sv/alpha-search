@@ -25,7 +25,15 @@ sql_conn = pymysql.connect(host='localhost', user='gaeul', password='alpha', db=
 curs = sql_conn.cursor(pymysql.cursors.DictCursor)
 
 def makeQuery(entities):
-    query = "select * from CAFES where " + "wi_fi_available=" + entities['wifi'] + " and parking_available=" + entities['parking']
+    flag = 0
+    query = "select * from CAFES"
+    if entities['wifi'] == 1 :
+        query = query + " where wi_fi_available=1 and"
+        flag = 1
+    if entities['parking'] == 1 :
+        if flag == 0 :
+            query = query + " where"
+        query = query +  " parking_available=1"
     return query
 
 def getDatafromDB(query) :
@@ -95,4 +103,6 @@ def run() :
     app.run(debug=False, port=port, host='0.0.0.0', ssl_context=('cert.pem', 'key.pem'))
 
 if __name__ == '__main__' :
-    app.run(debug=False, host='0.0.0.0', ssl_context=('cert.pem', 'key.pem'))
+    port = int(os.getenv('PORT', 5000))
+    print("Starting Web Server on port %d" % port)
+    app.run(debug=False, port=port, host='0.0.0.0', ssl_context=('cert.pem', 'key.pem'))
