@@ -20,20 +20,24 @@ fetch_query = "select * from CAFES"
 curs.execute(fetch_query)
 cafes = curs.fetchall()
 
-insert_query = "INSERT INTO REVIEWS_LIST ('index', 'reviews') VALUES (%s, %s)"
+insert_query = """UPDATE CAFES_REVIEWS SET reviews = %s WHERE cafe_id = %s"""
 
 for row in cafes :
     i = 0
     review_list = list()
     while True : 
-        crawling_url = row['yelpurl'] 
-        soup = BeautifulSoup(crawling_url, "lxml")
+        crawling_url_from_table = row['yelpurl']
+        crawling_url = crawling_url_from_table.split("?")[0]
         try :
             index = i * 20
-            plain_text = requests.get(crawling_url + "?start=" + str(index)).text
+            crawling_cursor = crawling_url + "?start=" + str(index)
+            print(crawling_cursor)
+            plain_text = requests.get(crawling_cursor).text
             soup = BeautifulSoup(plain_text, "lxml")
             # parsing reviews
-            reviews = soup.select('p[lang|=en]')
+            reviews = soup.select("p[lang|=en]")
+            if reviews == [] :
+                break
             for review in reviews :
                 review = review.replace("<p lang=\"en\">", "")
                 review_content = review.replace("</p", "")
@@ -45,4 +49,5 @@ for row in cafes :
             print(ex)
             break
         i = i + 1
-    curs.execute(insert_query, row['index'], "#tag#".join(review_list))
+    
+    curs.execute(insert_query, ("#tag#".join(review_list), row['id']))

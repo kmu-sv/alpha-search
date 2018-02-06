@@ -7,3 +7,6 @@ run
 nohup.out
 *.pyc
 .DS_Store
+test_crawling.py
+webhook.log
+log.html
