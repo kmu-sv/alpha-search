@@ -65,9 +65,6 @@ def convertRad2Deg(radian) :
 @app.route('/mappedcafes/<token>/<latitude>/<longitude>', methods = ['POST', 'GET', 'OPTIONS'])
 @Decorator_for_HTTP.crossdomain(origin='*')
 def getCafes(token, latitude, longitude) :
-    # TODO : remove later
-    print("token : ", token)
-    print("latitude : ", latitude, "longitude : ", longitude)
     # Get data mapped token from redis table 
     entities = json.loads(redis_obj.get(token).decode("utf-8"))
     # Generate a query
@@ -77,7 +74,6 @@ def getCafes(token, latitude, longitude) :
     open_cafe_list = findOpenCafes(filterbyradius(cafe_list, latitude, longitude))
     
     response = app.response_class(
-        #response=result,
         response=json.dumps(open_cafe_list),
         status=200,
         mimetype='application/json'
@@ -91,10 +87,8 @@ def index(token) :
 
 def run() :
     port = int(os.getenv('PORT', 5000))
-    print("Starting Web Server on port %d" % port)
     app.run(debug=False, port=port, host='0.0.0.0', ssl_context=('cert.pem', 'key.pem'))
 
 if __name__ == '__main__' :
     port = int(os.getenv('PORT', 5000))
-    print("Starting Web Server on port %d" % port)
     app.run(debug=False, port=port, host='0.0.0.0', ssl_context=('cert.pem', 'key.pem'))

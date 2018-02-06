@@ -3,10 +3,8 @@
 # input : list organized by python dictionary
 # output : print (insert success or fail)
 
-import json
-import pymysql
+import json, pymysql, pytz
 from datetime import datetime
-import pytz
 
 # connect to DB
 def getConnection():
@@ -16,7 +14,7 @@ def getConnection():
                             db='CAFE',
                             charset='utf8mb4')
 
-# inquiry data from connected DB 
+# Fetch data from connected DB 
 def getTable():
     conn = getConnection()
     try:
