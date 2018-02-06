@@ -116,6 +116,4 @@ def run() :
     app.run(debug=False, port=port, host='0.0.0.0')
 
 if __name__ == '__main__' : 
-    port = int(os.getenv('PORT', 5002))
-    print("Starting Webhook Server on port %d" % port)
-    app.run(debug=False, port=port, host='0.0.0.0')
+    app.run(debug=False, host='0.0.0.0')

@@ -95,6 +95,4 @@ def run() :
     app.run(debug=False, port=port, host='0.0.0.0', ssl_context=('cert.pem', 'key.pem'))
 
 if __name__ == '__main__' :
-    port = int(os.getenv('PORT', 5000))
-    print("Starting Web Server on port %d" % port)
-    app.run(debug=False, port=port, host='0.0.0.0', ssl_context=('cert.pem', 'key.pem'))
+    app.run(debug=False, host='0.0.0.0', ssl_context=('cert.pem', 'key.pem'))
