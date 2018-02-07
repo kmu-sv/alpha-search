@@ -27,11 +27,13 @@ curs = sql_conn.cursor(pymysql.cursors.DictCursor)
 def makeQuery(entities):
     flag = 0
     query = "select * from CAFES"
-    if entities['wifi'] == 1 :
-        query = query + " where wi_fi_available=1 and"
+    if entities['wifi'] == "1" :
+        query = query + " where wi_fi_available=1"
         flag = 1
-    if entities['parking'] == 1 :
-        if flag == 0 :
+    if entities['parking'] == "1" :
+        if flag == 1 :
+            query = query + " and"
+        else : 
             query = query + " where"
         query = query +  " parking_available=1"
     return query
