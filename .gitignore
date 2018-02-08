@@ -1,4 +1,6 @@
 .env
+*.json
+zipcode*
 result.json
 cert.pem
 key.pem
