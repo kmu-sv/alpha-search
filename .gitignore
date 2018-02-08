@@ -10,3 +10,5 @@ nohup.out
 test_crawling.py
 webhook.log
 log.html
+yelpurl.json
+data
