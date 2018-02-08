@@ -87,6 +87,26 @@ function controlDisplay(idx) {
         place['name']
     );
 
+    var star = (function () {
+        var rStar = "";
+
+        for (var i = 0; i < parseInt(place['rating'], 10); i++) {
+            rStar += "<i class='material-icons tiny'>star</i>";
+        }
+
+        if (place['rating'] % 1 > 0) {
+            rStar += "<i class='material-icons tiny'>star_half</i>";
+        }
+
+        var cntStar = (rStar.match(/material-icons/g) || []).length;
+
+        for (var cntStar; cntStar < 5; cntStar++) {
+            rStar += "<i class='material-icons tiny'>star_border</i>";
+        }
+
+        return rStar;
+    })();
+
     var link = (function () {
         var rLink = "";
         if (place['yelpurl'] != "") {
@@ -98,9 +118,10 @@ function controlDisplay(idx) {
     var detailParagraph = $("#detail-p");
     detailParagraph.empty();
     detailParagraph.append(
+        "<p>" + star + "</p>" +
+        "<p>" + place["address"] + "</p>" +
         "<p>" + link + "</p>" +
-        "<p>" + setIcon(place) + "</p>" +
-        "<p>" + place["address"] + "</p>"
+        "<p>" + setIcon(place) + "</p>"
     );
 
     var cards = $(".cards");
