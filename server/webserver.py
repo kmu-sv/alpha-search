@@ -13,7 +13,7 @@ from flask import Flask, request, make_response, render_template
 # import custom modules
 import Decorator_for_HTTP
 from OpenCafeFinder import findOpenCafes
-
+from Review_filter import get_filtered_reviews
 # Flask app should start in global layout
 app = Flask(__name__)
 
@@ -71,6 +71,7 @@ def getCafes(token, latitude, longitude) :
     query = makeQuery(entities)
     # Request to query the DB
     cafe_list = getDatafromDB(query)
+    review_list = getFilteredReviews()
     open_cafe_list = findOpenCafes(filterbyradius(cafe_list, latitude, longitude))
     
     response = app.response_class(
