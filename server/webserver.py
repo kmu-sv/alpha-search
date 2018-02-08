@@ -71,9 +71,10 @@ def getCafes(token, latitude, longitude) :
     query = makeQuery(entities)
     # Request to query the DB
     cafe_list = getDatafromDB(query)
-    review_list = getFilteredReviews()
+    reviews_list = getFilteredReviews()
     open_cafe_list = findOpenCafes(filterbyradius(cafe_list, latitude, longitude))
-    
+    for open_cafe in open_cafe_list :
+        open_cafe['reviews'] = reviews_list[open_cafe['id']]
     response = app.response_class(
         response=json.dumps(open_cafe_list),
         status=200,
