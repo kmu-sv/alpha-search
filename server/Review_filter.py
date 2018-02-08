@@ -22,6 +22,7 @@ setFilteredReviews() :
                 or "outlet" in review_lower :           
                 filtered_list.append(review)
         curs.execute(insert_query, (str(filtered_list), str(row['cafe_id'])))
+        
 getFilteredReviews() :
     fetch_query = "SELECT * from CAFES_REVIEWS_FILTERED"
     curs.execute(fetch_query)
