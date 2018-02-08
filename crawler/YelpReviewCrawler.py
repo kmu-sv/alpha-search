@@ -16,7 +16,7 @@ except ImportError:
 sql_conn = pymysql.connect(host='localhost', user='gaeul', password='alpha', db='CAFE', charset='utf8mb4')
 curs = sql_conn.cursor(pymysql.cursors.DictCursor)
 
-fetch_query = "select * from CAFES"
+fetch_query = "select id, yelpurl from CAFES"
 curs.execute(fetch_query)
 cafes = curs.fetchall()
 
@@ -41,9 +41,6 @@ for row in cafes :
             for review in reviews :
                 review = review.replace("<p lang=\"en\">", "")
                 review_content = review.replace("</p", "")
-                # TODO : Remove later
-                print(review_content)
-                print('=============================================================================================')
                 review_list.append(review_content)
         except Exception as ex : 
             print(ex)
