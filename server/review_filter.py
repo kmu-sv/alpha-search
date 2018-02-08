@@ -7,6 +7,7 @@ curs = sql_conn.cursor(pymysql.cursors.DictCursor)
 query = "SELECT cafe_id, reviews from CAFES_REVIEWS"
 curs.execute(query)
 reviews_list = curs.fetchall()
+dict_list = list()
 
 for row in reviews_list :
     reviews = row['reviews']
@@ -14,3 +15,5 @@ for row in reviews_list :
     filtered_list = list()
     for review in review_list :
         filtered_list.append(review)
+    dict_list.append(row['cafe_id'] : str(filtered_list))
+return json.dumps(dict_list)    
