@@ -92,7 +92,6 @@ def parseEntity(req) :
 
 def makeWebhookResult(data):
     base_url = "https://alpha-search.in:5000/"
-    #base_url = "https://54.241.216.252:5000/"
 
     # Generate token
     while(True) :
@@ -102,7 +101,7 @@ def makeWebhookResult(data):
 
     # insert mapping data to redis table
     redis_obj.set(token_generated, json.dumps(data))
-    redis_obj.expire(token_generated, 60)
+    #redis_obj.expire(token_generated, 60)
     speech = base_url + token_generated
     
     return {
@@ -112,5 +111,8 @@ def makeWebhookResult(data):
 
 def run() :
     port = int(os.getenv('PORT', 5002))
-    print("Starting Webhook Server on port %d" % port)
+    app.run(debug=False, port=port, host='0.0.0.0')
+
+if __name__ == '__main__' : 
+    port = int(os.getenv('PORT', 5002))
     app.run(debug=False, port=port, host='0.0.0.0')
