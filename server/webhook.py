@@ -91,7 +91,7 @@ def parseEntity(req) :
     return data
 
 def makeWebhookResult(data):
-    base_url = "https://alpha-search.in:5000/"
+    base_url = "http://alpha-search.in/"
 
     # Generate token
     while(True) :
@@ -114,5 +114,4 @@ def run() :
     app.run(debug=False, port=port, host='0.0.0.0')
 
 if __name__ == '__main__' : 
-    port = int(os.getenv('PORT', 5002))
-    app.run(debug=False, port=port, host='0.0.0.0')
+    run()

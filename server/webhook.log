@@ -1,0 +1,288 @@
+*** Starting uWSGI 2.0.15 (64bit) on [Tue Feb  6 01:54:23 2018] ***
+compiled with version: 5.4.0 20160609 on 02 February 2018 01:26:55
+os: Linux-4.4.0-1049-aws #58-Ubuntu SMP Fri Jan 12 23:17:09 UTC 2018
+nodename: ip-172-31-10-232
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 8
+current working directory: /etc/uwsgi/sites
+writing pidfile to /home/ubuntu/workspace/alpha-search/server/webhook.pid
+detected binary path: /home/ubuntu/alpha/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+chdir() to /home/ubuntu/workspace/alpha-search/server
+your processes number limit is 60090
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /home/ubuntu/workspace/alpha-search/server/webhook.sock fd 3
+Python version: 3.5.2 (default, Nov 23 2017, 16:37:01)  [GCC 5.4.0 20160609]
+Set PythonHome to /home/ubuntu/alpha
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x19c0be0
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 436560 bytes (426 KB) for 5 cores
+*** Operational MODE: preforking ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x19c0be0 pid: 6145 (default app)
+spawned uWSGI master process (pid: 6145)
+spawned uWSGI worker 1 (pid: 6147, cores: 1)
+spawned uWSGI worker 2 (pid: 6148, cores: 1)
+spawned uWSGI worker 3 (pid: 6149, cores: 1)
+spawned uWSGI worker 4 (pid: 6150, cores: 1)
+spawned uWSGI worker 5 (pid: 6151, cores: 1)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+worker 5 buried after 1 seconds
+goodbye to uWSGI.
+VACUUM: pidfile removed.
+VACUUM: unix socket /home/ubuntu/workspace/alpha-search/server/webhook.sock removed.
+*** Starting uWSGI 2.0.15 (64bit) on [Tue Feb  6 01:56:50 2018] ***
+compiled with version: 5.4.0 20160609 on 02 February 2018 01:26:55
+os: Linux-4.4.0-1049-aws #58-Ubuntu SMP Fri Jan 12 23:17:09 UTC 2018
+nodename: ip-172-31-10-232
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 8
+current working directory: /etc/uwsgi/sites
+writing pidfile to /home/ubuntu/workspace/alpha-search/server/webhook.pid
+detected binary path: /home/ubuntu/alpha/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+chdir() to /home/ubuntu/workspace/alpha-search/server
+your processes number limit is 60090
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /home/ubuntu/workspace/alpha-search/server/webhook.sock fd 3
+Python version: 3.5.2 (default, Nov 23 2017, 16:37:01)  [GCC 5.4.0 20160609]
+Set PythonHome to /home/ubuntu/alpha
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x812be0
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 436560 bytes (426 KB) for 5 cores
+*** Operational MODE: preforking ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x812be0 pid: 6259 (default app)
+spawned uWSGI master process (pid: 6259)
+spawned uWSGI worker 1 (pid: 6261, cores: 1)
+spawned uWSGI worker 2 (pid: 6262, cores: 1)
+spawned uWSGI worker 3 (pid: 6263, cores: 1)
+spawned uWSGI worker 4 (pid: 6264, cores: 1)
+spawned uWSGI worker 5 (pid: 6265, cores: 1)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+worker 5 buried after 1 seconds
+goodbye to uWSGI.
+VACUUM: pidfile removed.
+VACUUM: unix socket /home/ubuntu/workspace/alpha-search/server/webhook.sock removed.
+*** Starting uWSGI 2.0.15 (64bit) on [Tue Feb  6 01:58:44 2018] ***
+compiled with version: 5.4.0 20160609 on 02 February 2018 01:26:55
+os: Linux-4.4.0-1049-aws #58-Ubuntu SMP Fri Jan 12 23:17:09 UTC 2018
+nodename: ip-172-31-10-232
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 8
+current working directory: /etc/uwsgi/sites
+writing pidfile to /home/ubuntu/workspace/alpha-search/server/webhook.pid
+detected binary path: /home/ubuntu/alpha/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+chdir() to /home/ubuntu/workspace/alpha-search/server
+your processes number limit is 60090
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /home/ubuntu/workspace/alpha-search/server/webhook.sock fd 3
+Python version: 3.5.2 (default, Nov 23 2017, 16:37:01)  [GCC 5.4.0 20160609]
+Set PythonHome to /home/ubuntu/alpha
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x254abe0
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 436560 bytes (426 KB) for 5 cores
+*** Operational MODE: preforking ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x254abe0 pid: 6345 (default app)
+spawned uWSGI master process (pid: 6345)
+spawned uWSGI worker 1 (pid: 6347, cores: 1)
+spawned uWSGI worker 2 (pid: 6348, cores: 1)
+spawned uWSGI worker 3 (pid: 6349, cores: 1)
+spawned uWSGI worker 4 (pid: 6350, cores: 1)
+spawned uWSGI worker 5 (pid: 6351, cores: 1)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+worker 5 buried after 1 seconds
+goodbye to uWSGI.
+VACUUM: pidfile removed.
+VACUUM: unix socket /home/ubuntu/workspace/alpha-search/server/webhook.sock removed.
+*** Starting uWSGI 2.0.15 (64bit) on [Tue Feb  6 02:09:58 2018] ***
+compiled with version: 5.4.0 20160609 on 02 February 2018 01:26:55
+os: Linux-4.4.0-1049-aws #58-Ubuntu SMP Fri Jan 12 23:17:09 UTC 2018
+nodename: ip-172-31-10-232
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 8
+current working directory: /etc/uwsgi/sites
+writing pidfile to /home/ubuntu/workspace/alpha-search/server/webhook.pid
+detected binary path: /home/ubuntu/alpha/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+chdir() to /home/ubuntu/workspace/alpha-search/server
+your processes number limit is 60090
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /home/ubuntu/workspace/alpha-search/server/webhook.sock fd 3
+Python version: 3.5.2 (default, Nov 23 2017, 16:37:01)  [GCC 5.4.0 20160609]
+Set PythonHome to /home/ubuntu/alpha
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0xc81be0
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 436560 bytes (426 KB) for 5 cores
+*** Operational MODE: preforking ***
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0xc81be0 pid: 6806 (default app)
+spawned uWSGI master process (pid: 6806)
+spawned uWSGI worker 1 (pid: 6808, cores: 1)
+spawned uWSGI worker 2 (pid: 6809, cores: 1)
+spawned uWSGI worker 3 (pid: 6810, cores: 1)
+spawned uWSGI worker 4 (pid: 6811, cores: 1)
+spawned uWSGI worker 5 (pid: 6812, cores: 1)
+[2018-02-06 02:10:02,097] ERROR in app: Exception on /webhook [GET]
+Traceback (most recent call last):
+  File "/home/ubuntu/alpha/lib/python3.5/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/alpha/lib/python3.5/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/alpha/lib/python3.5/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/alpha/lib/python3.5/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/ubuntu/alpha/lib/python3.5/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/alpha/lib/python3.5/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "./webhook.py", line 27, in webhook
+    res = processWebhookRequest(req)
+  File "./webhook.py", line 37, in processWebhookRequest
+    if req.get("result").get("action") != "search.cafe":
+AttributeError: 'NoneType' object has no attribute 'get'
+[pid: 6811|app: 0|req: 1/1] 50.233.123.210 () {42 vars in 730 bytes} [Tue Feb  6 02:10:02 2018] GET /webhook => generated 291 bytes in 5 msecs (HTTP/1.1 500) 2 headers in 84 bytes (1 switches on core 0)
+<Response 165 bytes [200 OK]>
+[pid: 6812|app: 0|req: 1/2] 35.225.99.220 () {40 vars in 574 bytes} [Tue Feb  6 02:10:07 2018] POST /webhook => generated 165 bytes in 5 msecs (HTTP/1.1 200) 2 headers in 72 bytes (1 switches on core 0)
+[2018-02-06 02:10:27,830] ERROR in app: Exception on /webhook [GET]
+Traceback (most recent call last):
+  File "/home/ubuntu/alpha/lib/python3.5/site-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ubuntu/alpha/lib/python3.5/site-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ubuntu/alpha/lib/python3.5/site-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ubuntu/alpha/lib/python3.5/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/ubuntu/alpha/lib/python3.5/site-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ubuntu/alpha/lib/python3.5/site-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "./webhook.py", line 27, in webhook
+    res = processWebhookRequest(req)
+  File "./webhook.py", line 37, in processWebhookRequest
+    if req.get("result").get("action") != "search.cafe":
+AttributeError: 'NoneType' object has no attribute 'get'
+[pid: 6811|app: 0|req: 2/3] 50.233.123.210 () {42 vars in 730 bytes} [Tue Feb  6 02:10:27 2018] GET /webhook => generated 291 bytes in 1 msecs (HTTP/1.1 500) 2 headers in 84 bytes (1 switches on core 0)
+SIGINT/SIGQUIT received...killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+worker 5 buried after 1 seconds
+goodbye to uWSGI.
+VACUUM: pidfile removed.
+VACUUM: unix socket /home/ubuntu/workspace/alpha-search/server/webhook.sock removed.
+*** Starting uWSGI 2.0.15 (64bit) on [Tue Feb  6 02:12:51 2018] ***
+compiled with version: 5.4.0 20160609 on 02 February 2018 01:26:55
+os: Linux-4.4.0-1049-aws #58-Ubuntu SMP Fri Jan 12 23:17:09 UTC 2018
+nodename: ip-172-31-10-232
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 8
+current working directory: /etc/uwsgi/sites
+writing pidfile to /home/ubuntu/workspace/alpha-search/server/webhook.pid
+detected binary path: /home/ubuntu/alpha/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+chdir() to /home/ubuntu/workspace/alpha-search/server
+your processes number limit is 60090
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /home/ubuntu/workspace/alpha-search/server/webhook.sock fd 3
+Python version: 3.5.2 (default, Nov 23 2017, 16:37:01)  [GCC 5.4.0 20160609]
+Set PythonHome to /home/ubuntu/alpha
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0xbfabe0
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 436560 bytes (426 KB) for 5 cores
+*** Operational MODE: preforking ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0xbfabe0 pid: 7028 (default app)
+spawned uWSGI master process (pid: 7028)
+spawned uWSGI worker 1 (pid: 7030, cores: 1)
+spawned uWSGI worker 2 (pid: 7031, cores: 1)
+spawned uWSGI worker 3 (pid: 7032, cores: 1)
+spawned uWSGI worker 4 (pid: 7033, cores: 1)
+spawned uWSGI worker 5 (pid: 7034, cores: 1)
+<Response 165 bytes [200 OK]>
+[pid: 7033|app: 0|req: 1/1] 35.225.99.220 () {40 vars in 574 bytes} [Tue Feb  6 02:12:54 2018] POST /webhook => generated 165 bytes in 5 msecs (HTTP/1.1 200) 2 headers in 72 bytes (1 switches on core 0)
+*** Starting uWSGI 2.0.15 (64bit) on [Tue Feb  6 02:19:57 2018] ***
+compiled with version: 5.4.0 20160609 on 02 February 2018 01:26:55
+os: Linux-4.4.0-1049-aws #58-Ubuntu SMP Fri Jan 12 23:17:09 UTC 2018
+nodename: ip-172-31-10-232
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 8
+current working directory: /etc/uwsgi/sites
+writing pidfile to /home/ubuntu/workspace/alpha-search/server/webhook.pid
+detected binary path: /home/ubuntu/alpha/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+chdir() to /home/ubuntu/workspace/alpha-search/server
+your processes number limit is 60090
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to UNIX address /home/ubuntu/workspace/alpha-search/server/webhook.sock fd 3
+Python version: 3.5.2 (default, Nov 23 2017, 16:37:01)  [GCC 5.4.0 20160609]
+Set PythonHome to /home/ubuntu/alpha
+*** Python threads support is disabled. You can enable it with --enable-threads ***
+Python main interpreter initialized at 0x17fbbe0
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 436560 bytes (426 KB) for 5 cores
+*** Operational MODE: preforking ***
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x17fbbe0 pid: 7304 (default app)
+spawned uWSGI master process (pid: 7304)
+spawned uWSGI worker 1 (pid: 7306, cores: 1)
+spawned uWSGI worker 2 (pid: 7307, cores: 1)
+spawned uWSGI worker 3 (pid: 7308, cores: 1)
+spawned uWSGI worker 4 (pid: 7309, cores: 1)
+spawned uWSGI worker 5 (pid: 7310, cores: 1)
+Tue Feb  6 02:31:35 2018 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Tue Feb  6 02:31:35 2018 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Tue Feb  6 02:31:35 2018 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Tue Feb  6 02:31:35 2018 - uWSGI worker 5 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Tue Feb  6 02:31:35 2018 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Tue Feb  6 02:32:01 2018 - uWSGI worker 3 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Tue Feb  6 02:32:01 2018 - uWSGI worker 5 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Tue Feb  6 02:32:01 2018 - uWSGI worker 1 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Tue Feb  6 02:32:01 2018 - uWSGI worker 4 screams: UAAAAAAH my master disconnected: i will kill myself !!!
+Tue Feb  6 02:32:01 2018 - uWSGI worker 2 screams: UAAAAAAH my master disconnected: i will kill myself !!!

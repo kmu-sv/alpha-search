@@ -25,7 +25,17 @@ sql_conn = pymysql.connect(host='localhost', user='gaeul', password='alpha', db=
 curs = sql_conn.cursor(pymysql.cursors.DictCursor)
 
 def makeQuery(entities):
-    query = "select * from CAFES where " + "wi_fi_available=" + entities['wifi'] + " and parking_available=" + entities['parking']
+    flag = 0
+    query = "select * from CAFES"
+    if entities['wifi'] == "1" :
+        query = query + " where wi_fi_available=1"
+        flag = 1
+    if entities['parking'] == "1" :
+        if flag == 1 :
+            query = query + " and"
+        else : 
+            query = query + " where"
+        query = query +  " parking_available=1"
     return query
 
 def getDatafromDB(query) :
