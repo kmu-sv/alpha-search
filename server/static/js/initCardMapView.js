@@ -118,11 +118,13 @@ function controlDisplay(idx) {
     var detailParagraph = $("#detail-p");
     detailParagraph.empty();
     detailParagraph.append(
+        "<p style='float: right'>" + setIcon(place) + "</p>" +
         "<p>" + star + "</p>" +
-        "<p>" + place["address"] + "</p>" +
-        "<p>" + link + "</p>" +
-        "<p>" + setIcon(place) + "</p>"
-    );
+        "<p><i class='material-icons tiny'>local_phone</i>&nbsp" + place["phone_number"] + "</p>" +
+        "<p><i class='material-icons tiny'>home</i>&nbsp" + place["address"] + "</p>" +
+        "<p><i class='material-icons tiny'>link</i>&nbsp" + link + "</p>"
+    )
+    ;
 
     var cards = $(".cards");
     var detailInfo = $(".detail-info");
