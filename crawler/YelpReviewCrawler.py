@@ -36,7 +36,7 @@ for row in cafes :
             soup = BeautifulSoup(plain_text, "lxml")
             # parsing reviews
             reviews = soup.select("p[lang|=en]")
-            if reviews == [] :
+            if len(reviews) == 0 :
                 break
             for review in reviews :
                 review = review.replace("<p lang=\"en\">", "")
