@@ -14,6 +14,13 @@ for row in reviews_list :
     review_list = reviews.split("#tag#")
     filtered_list = list()
     for review in review_list :
-        filtered_list.append(review)
+        if "wi-fi" in review \
+            or "Wi-Fi" in review \
+            or "wifi" in review \
+            or "Wifi" in review \
+            or "WIFI" in review \
+            or "Wi-fi" in review \
+            or "outlet" in review :           
+            filtered_list.append(review)
     dict_list.append(row['cafe_id'] : str(filtered_list))
-return json.dumps(dict_list)    
+return json.dumps(dict_list)
