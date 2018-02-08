@@ -24,7 +24,7 @@ for item in temp_cafe_list:
         checkPlaceId.append(item['place_id'])
         result.append(item)
 
-with open('result.json', 'w') as fwrite:
+with open('placeidList.json', 'w') as fwrite:
     fwrite.write(json.dumps(result, indent=4))
 
 
