@@ -8,11 +8,10 @@ from datetime import datetime
 
 # connect to DB
 def getConnection():
-    return pymysql.connect(host='localhost',
-                            user='gaeul',
-                            password='alpha',
-                            db='CAFE',
-                            charset='utf8mb4')
+    file_reader = open('../db_connection_info', 'r')
+    db_connection_info = file_reader.read()
+    file_reader.close()
+    return pymysql.connect(db_connection_info)
 
 # Fetch data from connected DB 
 def getTable():

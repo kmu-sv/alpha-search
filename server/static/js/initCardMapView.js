@@ -87,11 +87,44 @@ function controlDisplay(idx) {
         place['name']
     );
 
+    var star = (function () {
+        var rStar = "";
+
+        for (var i = 0; i < parseInt(place['rating'], 10); i++) {
+            rStar += "<i class='material-icons tiny'>star</i>";
+        }
+
+        if (place['rating'] % 1 > 0) {
+            rStar += "<i class='material-icons tiny'>star_half</i>";
+        }
+
+        var cntStar = (rStar.match(/material-icons/g) || []).length;
+
+        for (var cntStar; cntStar < 5; cntStar++) {
+            rStar += "<i class='material-icons tiny'>star_border</i>";
+        }
+
+        return rStar;
+    })();
+
+    var link = (function () {
+        var rLink = "";
+        if (place['yelpurl'] != "") {
+            rLink += "<a target='_blank' href='" + place['yelpurl'] + "'>Yelp</a>"
+        }
+        return rLink;
+    })();
+
     var detailParagraph = $("#detail-p");
     detailParagraph.empty();
     detailParagraph.append(
-        "<p>" + place["address"] + "</p>"
-    );
+        "<p style='float: right'>" + setIcon(place) + "</p>" +
+        "<p>" + star + "</p>" +
+        "<p><i class='material-icons tiny'>local_phone</i>&nbsp" + place["phone_number"] + "</p>" +
+        "<p><i class='material-icons tiny'>home</i>&nbsp" + place["address"] + "</p>" +
+        "<p><i class='material-icons tiny'>link</i>&nbsp" + link + "</p>"
+    )
+    ;
 
     var cards = $(".cards");
     var detailInfo = $(".detail-info");
@@ -190,6 +223,9 @@ window.onload = function () {
                     cards.carousel();
 
                     $.each(data, function (key, place) {
+
+                        console.log(place);
+
                         places.push(
                             {
                                 lat: place['latitude'],
@@ -229,15 +265,14 @@ window.onload = function () {
 };
 
 function setIcon(place) {
-
     var icon = "";
 
     if (place['wi_fi_available']) {
-        icon += "<i class='material-icons'>wifi</i>";
+        icon += "<i class='material-icons tiny'>wifi</i>";
     }
 
     if (place['parking_available']) {
-        icon += "<i class='material-icons'>local_parking</i>";
+        icon += "<i class='material-icons tiny'>local_parking</i>";
     }
 
     return icon;
