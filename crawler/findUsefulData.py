@@ -41,6 +41,11 @@ for item in datainfo:
         data['openinfo'] = opendata_list
     if(item.get('rating')):
         data['rating'] = item['rating']
+    if(item.get('reviews')):
+        review_list = []
+        for reviewitem in item['reviews']:
+            review_list.append(reviewitem['text'])
+        data['googlereviews'] = review_list
     try:
         photourlList = []
         for photoitem in item['photos'] :
