@@ -76,7 +76,6 @@ def getCafes(token, latitude, longitude) :
     for open_cafe in open_cafe_list :
         open_cafe['reviews'] = eval(reviews_list[open_cafe['id']]['reviews_filtered'])
         open_cafe['review_count'] = reviews_list[open_cafe['id']]['review_count']
-        print(open_cafe['reviews'])
     response = app.response_class(
         response=json.dumps(open_cafe_list),
         status=200,
