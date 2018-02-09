@@ -10,9 +10,9 @@ record_values = ['name_value', 'address_value', 'phone_number_value', 'latitude_
 'rating_value', 'monday_open_hours_value', 'tuesday_open_hours_value', 'wednesday_open_hours_value', \
 'thursday_open_hours_value', 'friday_open_hours_value', 'saturday_open_hours_value', \
 'sunday_open_hours_value', 'photourl_value', 'take_out_available_value', 'parking_available_value', 'bike_parking_available_value', \
-'good_for_groups_value', 'ambience_value', 'wi_fi_available_value', 'website_value', 'yelpurl']
+'good_for_groups_value', 'ambience_value', 'wi_fi_available_value', 'website_value', 'yelpurl_value','googleurl_value', 'googlereviews_value']
 
-extracted_info = ['name', 'address', 'phone', 'latitude', 'longitude', 'rating', 'openinfo', 'photourl', 'attributes', 'website', 'yelpurl']
+extracted_info = ['name', 'address', 'phone', 'latitude', 'longitude', 'rating', 'openinfo', 'photourl', 'attributes', 'website', 'yelpurl', 'googleurl', 'googlereviews']
 extracted_attributes_info = ['Take-out', 'Parking', 'Bike Parking', 'Good for Groups', 'Ambience', 'Wi-Fi']
 day_info = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
@@ -31,12 +31,12 @@ def insertTable():
         with conn.cursor() as cursor:
             sql = 'INSERT INTO CAFES (name, address, phone_number, latitude, longitude, rating, monday_open_hours, tuesday_open_hours, \
                                         wednesday_open_hours, thursday_open_hours, friday_open_hours, saturday_open_hours, sunday_open_hours, photourl, \
-                                        take_out_available, parking_available, bike_parking_available, good_for_groups, ambience, wi_fi_available, website, yelpurl) \
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+                                        take_out_available, parking_available, bike_parking_available, good_for_groups, ambience, wi_fi_available, website, yelpurl, googleurl, googlereviews) \
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
             cursor.execute(sql, (record_values[0], record_values[1], record_values[2], record_values[3], record_values[4], \
             	            record_values[5], record_values[6], record_values[7], record_values[8], record_values[9], record_values[10], \
             	            record_values[11], record_values[12], record_values[13], record_values[14], record_values[15], record_values[16], \
-            	            record_values[17], record_values[18], record_values[19], record_values[20], record_values[21]))
+            	            record_values[17], record_values[18], record_values[19], record_values[20], record_values[21], record_values[22], record_values[23]))
             conn.commit()
             print(cursor.lastrowid)
 
@@ -55,6 +55,10 @@ def getRecord(cafes):
             if isExist == 0 :
                 if extracted_info[infoIndex] == 'openinfo' :
                     for day in range(7):
+                        record_values[recordIndex] == 'NULL'
+                        recordIndex+=1
+                elif extracted_info[infoIndex] == 'attributes' :
+                    for attribute_index in range(len(extracted_attributes_info)) :
                         record_values[recordIndex] == 'NULL'
                         recordIndex+=1
                 else :
@@ -85,6 +89,10 @@ def getRecord(cafes):
                         record_values[recordIndex] = 'NULL'
                         day_countIndex += 1
                         recordIndex += 1	
+                elif extracted_info[infoIndex] == 'googlereviews' :
+                    record_values[recordIndex] = cafes[cafeIndex].get(extracted_info[infoIndex])
+                    record_values[recordIndex] = str(record_values[recordIndex])
+                    recordIndex+=1
                 elif extracted_info[infoIndex] == 'photourl' :
                     record_values[recordIndex] = cafes[cafeIndex].get(extracted_info[infoIndex])[0]
                     recordIndex+=1
@@ -109,13 +117,12 @@ def getRecord(cafes):
                 else :
                     record_values[recordIndex] = cafes[cafeIndex].get(extracted_info[infoIndex])
                     recordIndex+=1
-
         print('finish')
         insertTable()
 
 if __name__ == "__main__":
     #import json and change into python dictionary
-    with open("result2.json", "r") as f:
+    with open("mergeData.json", "r") as f:
         read_data = f.read()
     cafe_list = json.loads(read_data)
     getRecord(cafe_list)
