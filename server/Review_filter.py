@@ -10,7 +10,7 @@ def setFilteredReviews() :
     curs.execute(fetch_query)
     reviews_list = curs.fetchall()
     # Filter review and Update table
-    insert_query = """INSERT INTO CAFES_REVIEWS_FILTERED(cafe_id, reviews_filtered) VALUES(%s, %s)"""
+    insert_query = """INSERT INTO CAFES_REVIEWS_FILTERED(cafe_id, reviews_filtered, review_count) VALUES(%s, %s, %s)"""
     for row in reviews_list :
         print(row['cafe_id'])
         reviews = row['reviews']
@@ -21,8 +21,8 @@ def setFilteredReviews() :
             if "wi-fi" in review_lower \
                 or "wifi" in review_lower \
                 or "outlet" in review_lower :           
-                filtered_list.append(review)
-        curs.execute(insert_query, (str(row['cafe_id']), str(filtered_list)))
+                filtered_list.append(str(review))
+        curs.execute(insert_query, (str(row['cafe_id']), str(filtered_list), str(len(filtered_list))))
     sql_conn.commit()
     sql_conn.close()
 
