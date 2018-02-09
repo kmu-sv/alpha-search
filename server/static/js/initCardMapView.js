@@ -20,6 +20,8 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14
     });
+
+    windowLoad()
 }
 
 function drop() {
@@ -161,7 +163,7 @@ function clearMarkers() {
     markers = [];
 }
 
-window.onload = function () {
+var windowLoad = function () {
 
     Materialize.toast('Hello!! My name is Alpha Search!');
     Materialize.toast("I'm looking for a cafe to recommend you...");
