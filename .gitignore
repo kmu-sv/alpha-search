@@ -12,3 +12,4 @@ webhook.log
 log.html
 yelpurl.json
 data
+db_connection_info

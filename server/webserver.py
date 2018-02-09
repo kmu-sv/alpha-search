@@ -21,21 +21,14 @@ app = Flask(__name__)
 redis_obj = redis.StrictRedis(host="localhost", port=6379, db=0)
 
 # Connect to MySQL and Generete dictionary cursor from connection
-sql_conn = pymysql.connect(host='localhost', user='gaeul', password='alpha', db='CAFE', charset='utf8mb4')
+file_reader = open('../db_connection_info', 'r')
+db_connection_info = file_reader.read()
+file_reader.close()
+sql_conn = pymysql.connect(db_connection_info)
 curs = sql_conn.cursor(pymysql.cursors.DictCursor)
 
 def makeQuery(entities):
-    flag = 0
-    query = "select * from CAFES"
-    if entities['wifi'] == "1" :
-        query = query + " where wi_fi_available=1"
-        flag = 1
-    if entities['parking'] == "1" :
-        if flag == 1 :
-            query = query + " and"
-        else : 
-            query = query + " where"
-        query = query +  " parking_available=1"
+    query = "select * from CAFES where " + "wi_fi_available=" + entities['wifi'] + " and parking_available=" + entities['parking']
     return query
 
 def getDatafromDB(query) :
