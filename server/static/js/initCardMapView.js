@@ -21,7 +21,7 @@ function initMap() {
         zoom: 14
     });
 
-    windowLoad()
+    windowLoad();
 }
 
 function drop() {
