@@ -13,7 +13,7 @@ from flask import Flask, request, make_response, render_template
 # import custom modules
 import Decorator_for_HTTP
 from OpenCafeFinder import findOpenCafes
-from Review_filter import get_filtered_reviews
+from Review_filter import getFilteredReviews
 # Flask app should start in global layout
 app = Flask(__name__)
 
