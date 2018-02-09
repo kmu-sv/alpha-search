@@ -1,10 +1,7 @@
 import json, pymysql
 
 # Connect to MySQL and Generete dictionary cursor from connection
-file_reader = open('../db_connection_info', 'r')
-db_connection_info = file_reader.read()
-file_reader.close()
-sql_conn = pymysql.connect(db_connection_info)
+sql_conn = pymysql.connect(host='localhost',user='gaeul',password='alpha',db='CAFE',charset='utf8mb4')
 curs = sql_conn.cursor(pymysql.cursors.DictCursor)
 
 def setFilteredReviews() :
