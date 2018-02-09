@@ -23,6 +23,7 @@ def checkDuplicated(yelpAddress, googleAddress):
 
 
 # main
+only_google_list = []
 
 for googleitem in googledata:
     googleAddress = googleitem['address']
@@ -43,9 +44,14 @@ for googleitem in googledata:
             if not (yelpitem.get('rating')): 
                 if(googleitem.get('rating')):
                    yelpitem['rating'] = googleitem['rating']
+            if(googleitem.get('googlereviews')):
+                yelpitem['googlereviews'] = googleitem['googlereviews']
             break
     else:
-        yelpdata.append(googleitem)
+        only_google_list.append(googleitem)
+
+for onlyGoogleitem in only_google_list:
+    yelpdata.append(onlyGoogleitem)
 
 with open('mergeData.json', 'w') as mergefile:
     mergefile.write(json.dumps(yelpdata, indent=4))
