@@ -21,10 +21,7 @@ app = Flask(__name__)
 redis_obj = redis.StrictRedis(host="localhost", port=6379, db=0)
 
 # Connect to MySQL and Generete dictionary cursor from connection
-file_reader = open('../db_connection_info', 'r')
-db_connection_info = file_reader.read()
-file_reader.close()
-sql_conn = pymysql.connect(db_connection_info)
+sql_conn = pymysql.connect(host='localhost',user='gaeul',password='alpha',db='CAFE',charset='utf8mb4')
 curs = sql_conn.cursor(pymysql.cursors.DictCursor)
 
 def makeQuery(entities):
@@ -77,7 +74,8 @@ def getCafes(token, latitude, longitude) :
     reviews_list = getFilteredReviews()
     open_cafe_list = findOpenCafes(filterbyradius(cafe_list, latitude, longitude))
     for open_cafe in open_cafe_list :
-        open_cafe['reviews'] = reviews_list[open_cafe['id']]
+        open_cafe['reviews'] = eval(reviews_list[open_cafe['id']]['reviews_filtered'])
+        open_cafe['review_count'] = reviews_list[open_cafe['id']]['review_count']
     response = app.response_class(
         response=json.dumps(open_cafe_list),
         status=200,
